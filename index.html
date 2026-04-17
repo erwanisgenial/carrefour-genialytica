@@ -2,6 +2,119 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+
+<!--
+  SÉCURITÉ OBSERVATOIRE GENIAL - Protection accès hors iframe Factory
+  À coller juste après <head> dans observatoire.html.template
+  Et créer /vercel.json à la racine pour les headers
+-->
+
+<!-- COUCHE 2 : noindex -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+
+<!-- COUCHE 1 : check iframe + referrer (script défensif) -->
+<script>
+(function() {
+  // Whitelist des domaines autorisés à embed cet observatoire
+  const ALLOWED_REFERRERS = [
+    'factory.wearegenial.com',
+    'wearegenial.com',
+    // Ajouter ici d'autres domaines autorisés si besoin (ex. dashboard client)
+  ];
+
+  // Whitelist des hostnames Vercel de preview pour tests internes GENIAL
+  const ALLOWED_PREVIEW_PATTERNS = [
+    /\.vercel\.app$/,  // autorise les previews Vercel GENIAL
+  ];
+
+  function isAllowedReferrer() {
+    if (!document.referrer) return false;
+    try {
+      const refHost = new URL(document.referrer).hostname;
+      if (ALLOWED_REFERRERS.includes(refHost)) return true;
+      if (ALLOWED_PREVIEW_PATTERNS.some(p => p.test(refHost))) return true;
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function isInAllowedIframe() {
+    // Détecte si la page est dans une iframe
+    const isInIframe = window.self !== window.top;
+    if (!isInIframe) return false;
+    // Même dans une iframe, on vérifie le référent
+    return isAllowedReferrer();
+  }
+
+  // Mode dev : si le paramètre ?preview=genial-internal est présent ET que le referrer est OK, on laisse passer
+  // (utile pour l'équipe interne qui teste hors Factory)
+  const urlParams = new URLSearchParams(window.location.search);
+  const isInternalPreview = urlParams.get('preview') === 'genial-internal' && isAllowedReferrer();
+
+  if (!isInAllowedIframe() && !isInternalPreview) {
+    // Bloquer le rendu : remplacer tout le body par un écran d'accès restreint
+    document.documentElement.innerHTML = `
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="robots" content="noindex, nofollow">
+        <title>Accès restreint</title>
+        <style>
+          body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #120D35 0%, #2F2377 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+          }
+          .card {
+            max-width: 480px;
+            text-align: center;
+          }
+          .star {
+            color: #1BCFFF;
+            font-size: 28px;
+            margin-bottom: 24px;
+          }
+          h1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 0 0 12px;
+            letter-spacing: -0.02em;
+          }
+          p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.72);
+            margin: 0 0 20px;
+          }
+          .contact {
+            font-size: 13px;
+            color: #1BCFFF;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <div class="star">✦</div>
+          <h1>Accès restreint</h1>
+          <p>Cette ressource est réservée aux utilisateurs authentifiés de la plateforme GENIAL Factory.</p>
+          <p class="contact">contact@wearegenial.com</p>
+        </div>
+      </body>
+    `;
+    // Stoppe toute exécution de JS supplémentaire
+    throw new Error('Access restricted');
+  }
+})();
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Observatoire Carrefour Voyages · GENIALYTICA TRAVEL</title>
 <meta name="description" content="Analyse conversationnelle J+1 du moteur de recherche IA de Carrefour Voyages — 6 760 conversations, 12 verbatims, 4 personas, 3 bassins géographiques. Méthodologie GENIALYTICA TRAVEL par GENIAL.">
@@ -1529,12 +1642,12 @@ a { color: inherit; text-decoration: none; }
   <div class="hero-inner">
     <div class="hero-eyebrow">GENIALYTICA TRAVEL · Analyse conversationnelle</div>
     <h1 class="hero-title">Carrefour Voyages,<br><em>premier baromètre B2C</em><br>d'un moteur IA.</h1>
-    <p class="hero-lede">Le 2026-04-16, le moteur de recherche IA de Carrefour Voyages a été ouvert au grand public. Voici ce que <strong>2 313 conversations</strong> nous disent du désir de voyage, du parcours utilisateur, et des leviers d'approfondissement à activer.</p>
+    <p class="hero-lede">Le 16 avril 2026, le moteur de recherche IA de Carrefour Voyages a été ouvert au grand public. Voici ce que <strong>6 760 conversations</strong> nous disent, en J+1, du désir de voyage, du parcours utilisateur, et de la friction qu'il reste à lever.</p>
     <dl class="hero-meta">
-      <div><dt>Période</dt><dd>2026-04-16 → 2026-04-17</dd></div>
-      <div><dt>Conversations</dt><dd>2 313</dd></div>
-      <div><dt>Messages</dt><dd>9 700</dd></div>
-      <div><dt>Lancement</dt><dd>2026-04-16</dd></div>
+      <div><dt>Période</dt><dd>27 jan → 17 avr 2026</dd></div>
+      <div><dt>Conversations</dt><dd>6 760</dd></div>
+      <div><dt>Messages</dt><dd>22 228</dd></div>
+      <div><dt>Lancement</dt><dd>16 avril 2026</dd></div>
     </dl>
   </div>
 </section>
@@ -1549,21 +1662,21 @@ a { color: inherit; text-decoration: none; }
     <div class="signals">
       <div class="signal adopt">
         <span class="signal-label">Adoption</span>
-        <div class="signal-big">2 313</div>
-        <div class="signal-sub">conversations analysées</div>
-        <p class="signal-body">Le moteur de recherche IA a généré un volume d'engagement B2C inédit pour Carrefour Voyages — signal fort d'intérêt utilisateur et démonstration d'une audience acquise dès l'ouverture.</p>
+        <div class="signal-big">1 836</div>
+        <div class="signal-sub">conversations le jour du lancement</div>
+        <p class="signal-body">+ 209 conversations sur la journée en cours. Le moteur de recherche IA a généré un volume d'engagement B2C inédit pour Carrefour Voyages — signal fort d'intérêt utilisateur.</p>
       </div>
       <div class="signal friction">
-        <span class="signal-label">Potentiel d'approfondissement</span>
-        <div class="signal-big">52,1 %</div>
-        <div class="signal-sub">de visiteurs en exploration rapide</div>
-        <p class="signal-body">49,3 % des conversations atteignent une proposition concrète — socle solide sur lequel bâtir une croissance d'engagement significative en faisant évoluer le pattern conversationnel.</p>
+        <span class="signal-label">Friction</span>
+        <div class="signal-big">72,3 %</div>
+        <div class="signal-sub">des conversations s'arrêtent après 1 message</div>
+        <p class="signal-body">Seulement 37,2 % des conversations aboutissent à une proposition d'offre concrète. L'agent pose 2-3 questions (période, budget, voyageurs) avant de proposer, ce qui perd une part importante des utilisateurs.</p>
       </div>
       <div class="signal opp">
         <span class="signal-label">Opportunité</span>
-        <div class="signal-big">50</div>
-        <div class="signal-sub">requêtes d'inspiration ouverte</div>
-        <p class="signal-body">Les utilisateurs arrivent avec une volonté d'être guidés, conseillés, inspirés. Le potentiel de l'agent dépasse le moteur de recherche : il peut devenir un vrai compagnon de voyage.</p>
+        <div class="signal-big">285</div>
+        <div class="signal-sub">requêtes d'inspiration « où partir ? »</div>
+        <p class="signal-body">Les utilisateurs arrivent sans destination précise. Ils veulent être conseillés, inspirés, guidés. Le potentiel de l'agent dépasse le moteur de recherche : il peut devenir un vrai compagnon de voyage.</p>
       </div>
     </div>
   </div>
@@ -1599,8 +1712,8 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="dim">
         <div class="dim-num">05</div>
-        <h4 class="dim-title">Parcours &amp; Opportunités B2C</h4>
-        <p class="dim-body">Taux de complétion, parcours utilisateur, leviers d'approfondissement identifiés.</p>
+        <h4 class="dim-title">Funnel &amp; Friction B2C</h4>
+        <p class="dim-body">Taux de complétion, no-results, verbatims de friction. Optimisation du parcours utilisateur.</p>
       </div>
     </div>
   </div>
@@ -1614,7 +1727,7 @@ a { color: inherit; text-decoration: none; }
   <div class="section-inner">
     <div class="section-eyebrow"><span class="num">03</span> Chiffres clés</div>
     <h2 class="section-title"><em>Six repères</em><br>essentiels en un coup d'œil.</h2>
-    <p class="section-lede">Les métriques-ancres de l'observatoire. Adoption, volume, engagement, opportunités : tout ce qui permet de poser le contexte avant de plonger dans le détail.</p>
+    <p class="section-lede">Les métriques-ancres de l'observatoire. Adoption, volume, engagement, friction : tout ce qui permet de poser le contexte avant de plonger dans le détail.</p>
   </div>
 </section>
 
@@ -1622,23 +1735,23 @@ a { color: inherit; text-decoration: none; }
 <section class="section section-bg" style="padding-top: 48px;">
   <div class="section-inner">
     <div class="kpis">
-      <div class="kpi"><div class="kpi-label">Conversations</div><div class="kpi-value">2 313</div><div class="kpi-sub">conversations analysées</div></div>
-      <div class="kpi"><div class="kpi-label">Messages totaux</div><div class="kpi-value">9 700</div><div class="kpi-sub">messages échangés</div></div>
-      <div class="kpi"><div class="kpi-label">Msgs / conv</div><div class="kpi-value">3,3</div><div class="kpi-sub">moyenne par conversation</div></div>
-      <div class="kpi"><div class="kpi-label">Jour de lancement</div><div class="kpi-value">2 313</div><div class="kpi-sub">depuis le lancement</div></div>
-      <div class="kpi"><div class="kpi-label">Proposition concrète</div><div class="kpi-value">49,3 %</div><div class="kpi-sub">conversations avec offre</div></div>
-      <div class="kpi"><div class="kpi-label">Exploration rapide</div><div class="kpi-value">52,1 %</div><div class="kpi-sub">premier contact bref, à approfondir</div></div>
+      <div class="kpi"><div class="kpi-label">Conversations</div><div class="kpi-value">6 760</div><div class="kpi-sub">sur 81 jours</div></div>
+      <div class="kpi"><div class="kpi-label">Messages totaux</div><div class="kpi-value">22 228</div><div class="kpi-sub">11 114 users / 11 114 agent</div></div>
+      <div class="kpi"><div class="kpi-label">Msgs / conv</div><div class="kpi-value">3,3</div><div class="kpi-sub">médiane 2,0 · max 42</div></div>
+      <div class="kpi"><div class="kpi-label">Jour de lancement</div><div class="kpi-value">1 836</div><div class="kpi-sub">convs le 16/04 · record</div></div>
+      <div class="kpi"><div class="kpi-label">Taux de complétion</div><div class="kpi-value">37,2 %</div><div class="kpi-sub">conversations avec offre</div></div>
+      <div class="kpi"><div class="kpi-label">Taux d'abandon</div><div class="kpi-value">72,3 %</div><div class="kpi-sub">s'arrêtent après 1 msg</div></div>
     </div>
 
     <!-- Daily traffic chart -->
     <div class="traffic-card">
       <div class="section-eyebrow" style="margin-bottom: 12px;">Trafic quotidien</div>
-      <h3 style="font-family: var(--font-display); font-weight: 400; font-size: 28px; color: var(--purple); letter-spacing: -0.02em; margin-bottom: 24px;">Un pic inédit au lancement</h3>
+      <h3 style="font-family: var(--font-display); font-weight: 400; font-size: 28px; color: var(--purple); letter-spacing: -0.02em; margin-bottom: 24px;">Le lancement du 16 avril : un pic inédit</h3>
       <div class="traffic-chart" id="trafficChart"></div>
       <div class="traffic-legend">
-        <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--cyan)"></span> Jour du lancement (2 313)</div>
-        <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--purple)"></span> J+1 (journée suivante)</div>
-        <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--purple-lt)"></span> Jours de test interne</div>
+        <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--cyan)"></span> 16/04 — Lancement grand public (1 836)</div>
+        <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--purple)"></span> 17/04 — J+1 (209)</div>
+        <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--purple-lt)"></span> 08/04 — Test interne</div>
         <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--gray-line)"></span> Autres jours (tests équipe)</div>
       </div>
     </div>
@@ -1650,22 +1763,22 @@ a { color: inherit; text-decoration: none; }
       <div class="profiles">
         <div class="profile curious">
           <div class="profile-head">Visiteur curieux · 2 messages</div>
-          <div class="profile-pct">52,1 %</div>
-          <div class="profile-count">1 206 conversations</div>
-          <p class="profile-desc">Exploration rapide : une question, une prise de contact, une sortie. Socle à amplifier vers plus d'engagement.</p>
+          <div class="profile-pct">72,3 %</div>
+          <div class="profile-count">4 889 conversations</div>
+          <p class="profile-desc">Pose une seule question, voit la demande de précision de l'agent, repart. <strong>Majoritaire.</strong></p>
           <div class="profile-example">Ex. — « Djerba », « circuit », « Paris »</div>
         </div>
         <div class="profile engaged">
           <div class="profile-head">Utilisateur engagé · 3 à 9 messages</div>
-          <div class="profile-pct">40,4 %</div>
-          <div class="profile-count">934 conversations</div>
+          <div class="profile-pct">22,5 %</div>
+          <div class="profile-count">1 523 conversations</div>
           <p class="profile-desc">Dialogue productif : partage période, budget, destination, obtient des propositions concrètes.</p>
           <div class="profile-example">Ex. — Échange structuré autour d'un projet précis</div>
         </div>
         <div class="profile power">
           <div class="profile-head">Power user · 10+ messages</div>
-          <div class="profile-pct">7,5 %</div>
-          <div class="profile-count">173 conversations</div>
+          <div class="profile-pct">5,1 %</div>
+          <div class="profile-count">348 conversations</div>
           <p class="profile-desc">Affine, compare, demande des alternatives. Comportement d'exploration et de ré-itération fort.</p>
           <div class="profile-example">Ex. — « Comparez Marrakech et Istanbul », affinage destination → hôtel → budget</div>
         </div>
@@ -1680,7 +1793,7 @@ a { color: inherit; text-decoration: none; }
   <span class="star-deco s4">✦</span>
   <div class="section-inner">
     <div class="section-eyebrow"><span class="num">04</span> Observatoire touristique</div>
-    <h2 class="section-title">Les attentes réelles<br><em>de vos visiteurs.</em></h2>
+    <h2 class="section-title">Ce que les Français<br><em>cherchent vraiment.</em></h2>
     <p class="section-lede">Destinations, typologies, saisonnalité, budgets. Une cartographie vivante de la demande B2C, reconstituée à partir des messages libres des utilisateurs — sans filtre, sans catalogue, sans biais d'inventaire.</p>
   </div>
 </section>
@@ -1719,8 +1832,8 @@ a { color: inherit; text-decoration: none; }
       <div class="bassin soleil">
         <div class="bassin-head">☀️ Soleil proche (Méditerranée élargie)</div>
         <div class="bassin-body">
-          <div class="bassin-big">987</div>
-          <div class="bassin-meta">conversations · 66 % du trafic tourisme</div>
+          <div class="bassin-big">2 469</div>
+          <div class="bassin-meta">conversations · 56 % du trafic tourisme</div>
           <div class="bassin-top">Top 3 destinations</div>
           <ul class="bassin-list">
             <li><span class="rank">1. Espagne</span><span class="val">613</span></li>
@@ -1733,8 +1846,8 @@ a { color: inherit; text-decoration: none; }
       <div class="bassin europe">
         <div class="bassin-head">🏰 Hexagone &amp; Europe continentale</div>
         <div class="bassin-body">
-          <div class="bassin-big">286</div>
-          <div class="bassin-meta">conversations · 19 % du trafic tourisme</div>
+          <div class="bassin-big">1 347</div>
+          <div class="bassin-meta">conversations · 31 % du trafic tourisme</div>
           <div class="bassin-top">Top 3 destinations</div>
           <ul class="bassin-list">
             <li><span class="rank">1. France</span><span class="val">1 199</span></li>
@@ -1747,8 +1860,8 @@ a { color: inherit; text-decoration: none; }
       <div class="bassin long">
         <div class="bassin-head">✈️ Long-courrier &amp; rêve</div>
         <div class="bassin-body">
-          <div class="bassin-big">218</div>
-          <div class="bassin-meta">conversations · 14 % du trafic tourisme</div>
+          <div class="bassin-big">566</div>
+          <div class="bassin-meta">conversations · 13 % du trafic tourisme</div>
           <div class="bassin-top">Top 3 destinations</div>
           <ul class="bassin-list">
             <li><span class="rank">1. Maldives</span><span class="val">138</span></li>
@@ -1786,35 +1899,35 @@ a { color: inherit; text-decoration: none; }
         <div class="compo">
           <div class="compo-head">
             <div class="compo-icon" style="background: rgba(234, 88, 12, 0.15); color: var(--orange);">👨‍👩‍👧</div>
-            <div><div class="compo-name">Famille avec enfants</div><div class="compo-sub">126 convs</div></div>
+            <div><div class="compo-name">Famille avec enfants</div><div class="compo-sub">740 convs</div></div>
           </div>
-          <div class="compo-pct" style="color: var(--orange);">40 %</div>
+          <div class="compo-pct" style="color: var(--orange);">49 %</div>
         </div>
         <div class="compo">
           <div class="compo-head">
             <div class="compo-icon" style="background: rgba(167, 139, 250, 0.2); color: var(--purple-lt);">💑</div>
-            <div><div class="compo-name">Couple (2 personnes)</div><div class="compo-sub">127 convs</div></div>
+            <div><div class="compo-name">Couple (2 personnes)</div><div class="compo-sub">468 convs</div></div>
           </div>
-          <div class="compo-pct" style="color: var(--purple-lt);">40 %</div>
+          <div class="compo-pct" style="color: var(--purple-lt);">31 %</div>
         </div>
         <div class="compo">
           <div class="compo-head">
             <div class="compo-icon" style="background: rgba(37, 99, 235, 0.15); color: var(--blue);">👥</div>
-            <div><div class="compo-name">Groupe (3-5 pers.)</div><div class="compo-sub">37 convs</div></div>
+            <div><div class="compo-name">Groupe (3-5 pers.)</div><div class="compo-sub">275 convs</div></div>
           </div>
-          <div class="compo-pct" style="color: var(--blue);">11 %</div>
+          <div class="compo-pct" style="color: var(--blue);">18 %</div>
         </div>
         <div class="compo">
           <div class="compo-head">
             <div class="compo-icon" style="background: rgba(27, 207, 255, 0.2); color: #0891b2;">🚶</div>
-            <div><div class="compo-name">Solo</div><div class="compo-sub">15 convs</div></div>
+            <div><div class="compo-name">Solo</div><div class="compo-sub">20 convs</div></div>
           </div>
-          <div class="compo-pct" style="color: #0891b2;">4 %</div>
+          <div class="compo-pct" style="color: #0891b2;">1 %</div>
         </div>
         <div class="compo">
           <div class="compo-head">
             <div class="compo-icon" style="background: rgba(22, 163, 74, 0.15); color: var(--green);">👨‍👩‍👧‍👦</div>
-            <div><div class="compo-name">Grand groupe (6+)</div><div class="compo-sub">4 convs</div></div>
+            <div><div class="compo-name">Grand groupe (6+)</div><div class="compo-sub">5 convs</div></div>
           </div>
           <div class="compo-pct" style="color: var(--green);">&lt; 1 %</div>
         </div>
@@ -1854,17 +1967,17 @@ a { color: inherit; text-decoration: none; }
         <div class="window-title">Trois fenêtres d'opportunité</div>
         <div class="window-card">
           <div class="window-name">☀️ Pic estival</div>
-          <div class="window-period">Juin-Août · 426 convs</div>
-          <div class="window-body">43 % du volume. Anticipation 3-4 mois à cultiver.</div>
+          <div class="window-period">Juin-Août · 1 153 convs</div>
+          <div class="window-body">58 % du volume. Pics de réservation 3-4 mois avant.</div>
         </div>
         <div class="window-card">
           <div class="window-name">🌸 Printemps &amp; Pâques</div>
-          <div class="window-period">Mars-Mai · 378 convs</div>
-          <div class="window-body">Fenêtre à forte valeur : court séjour, city-trip, week-end prolongé.</div>
+          <div class="window-period">Mars-Mai · 477 convs</div>
+          <div class="window-body">Fenêtre sous-exploitée : court séjour, city-trip, week-end prolongé.</div>
         </div>
         <div class="window-card">
           <div class="window-name">🍂 Automne-Toussaint</div>
-          <div class="window-period">Sept-Nov · 144 convs</div>
+          <div class="window-period">Sept-Nov · 467 convs</div>
           <div class="window-body">Tropiques, soleil d'hiver, hors vacances scolaires.</div>
         </div>
       </div>
@@ -1882,7 +1995,7 @@ a { color: inherit; text-decoration: none; }
       <div class="twocol">
         <div>
           <div class="budget-head">Répartition des budgets exprimés</div>
-          <div class="budget-head-sub">Budget médian : 1 000 € · moyen : 1 402 € · n = 556</div>
+          <div class="budget-head-sub">Budget médian : 700 € · moyen : 1 185 € · n = 1 100</div>
 
           <div class="budget-bar-row"><div class="budget-bar-name">Petit budget (&lt; 500 €)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--red); width: 100%;"></div></div><div class="budget-val">481 (44 %)</div></div>
           <div class="budget-bar-row"><div class="budget-bar-name">Moyen (500-1500 €)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--orange); width: 76%;"></div></div><div class="budget-val">367 (33 %)</div></div>
@@ -1925,7 +2038,7 @@ a { color: inherit; text-decoration: none; }
     <div class="personas">
       <div class="persona famille">
         <div class="persona-head">
-          <div class="persona-head-left"><span class="persona-emoji">☀️</span><span class="persona-name">Sophie & Julien, Famille Soleil</span></div>
+          <div class="persona-head-left"><span class="persona-emoji">☀️</span><span class="persona-name">Sophie &amp; Julien, Famille Soleil</span></div>
           <span class="persona-share">~40 %</span>
         </div>
         <div class="persona-body">
@@ -1947,7 +2060,7 @@ a { color: inherit; text-decoration: none; }
 
       <div class="persona couple">
         <div class="persona-head">
-          <div class="persona-head-left"><span class="persona-emoji">🥂</span><span class="persona-name">Claire & Marc, Couple Escapade</span></div>
+          <div class="persona-head-left"><span class="persona-emoji">🥂</span><span class="persona-name">Claire &amp; Marc, Couple Escapade</span></div>
           <span class="persona-share">~25 %</span>
         </div>
         <div class="persona-body">
@@ -2007,7 +2120,7 @@ a { color: inherit; text-decoration: none; }
             <h5>Saisonnalité</h5>
             <p>Précise (dates arrêtées).</p>
           </div>
-          <div class="persona-verbatim">Hôtel R2 Pajara Beach Fuerteventura 4*</div>
+          <div class="persona-verbatim">Hôtel R2 Pájara Beach Fuerteventura 4*</div>
         </div>
       </div>
     </div>
@@ -2056,7 +2169,7 @@ a { color: inherit; text-decoration: none; }
     </div>
 
     <div style="margin-top: 32px; padding: 20px 24px; background: var(--lavender); border-radius: 12px; font-size: 14.5px; color: var(--purple); line-height: 1.55;">
-      <strong>Lecture stratégique :</strong> les 20 % d'intentions « inspiration ouverte » restent à servir pleinement aujourd'hui (réponse standard « quelle période / budget ? »). <strong>Nouvelle opportunité :</strong> carrousel de suggestions visuelles générées sur prompt libre.
+      <strong>Lecture stratégique :</strong> les 20 % d'intentions « inspiration ouverte » sont sous-servies aujourd'hui (réponse standard « quelle période / budget ? »). <strong>Nouvelle opportunité :</strong> carrousel de suggestions visuelles générées sur prompt libre.
     </div>
   </div>
 </section>
@@ -2066,85 +2179,85 @@ a { color: inherit; text-decoration: none; }
   <span class="star-deco s2">✦</span>
   <span class="star-deco s3">✦</span>
   <div class="section-inner">
-    <div class="section-eyebrow"><span class="num">06</span> Opportunités d'évolution produit</div>
-    <h2 class="section-title">Leviers<br><em>d'approfondissement identifiés.</em></h2>
-    <p class="section-lede">Entre le premier contact et l'interaction post-offre, une opportunité de croissance d'engagement significative s'ouvre. Identifier où l'approfondissement se joue permet de prioriser le levier produit #1 du prochain trimestre.</p>
+    <div class="section-eyebrow"><span class="num">06</span> Funnel &amp; friction</div>
+    <h2 class="section-title">Où les utilisateurs<br><em>décrochent-ils ?</em></h2>
+    <p class="section-lede">Entre le premier contact et l'interaction post-offre, le moteur perd deux utilisateurs sur trois. Comprendre où — et surtout pourquoi — est le levier #1 du prochain trimestre.</p>
   </div>
 </section>
 
 <section class="section section-bg" style="padding-top: 48px;">
   <div class="section-inner">
     <div class="section-eyebrow"><span class="num">6.1</span> Funnel de conversion</div>
-    <h2 class="section-title">Un parcours avec <strong>50 pts</strong> <em>de potentiel d'approfondissement.</em></h2>
+    <h2 class="section-title">Un parcours qui perd <strong>63 %</strong> <em>des utilisateurs avant l'offre.</em></h2>
 
     <div class="funnel">
       <div class="funnel-bars">
         <div class="funnel-step s1">
           <div class="funnel-step-name">1. Premier contact</div>
           <div class="funnel-step-desc">User tape une destination ou une question ouverte</div>
-          <div class="funnel-step-meta"><div class="val">2 313</div><div class="pct">100 %</div></div>
+          <div class="funnel-step-meta"><div class="val">6 760</div><div class="pct">100 %</div></div>
         </div>
         <div class="funnel-step s2">
           <div class="funnel-step-name">2. Offre concrète présentée</div>
           <div class="funnel-step-desc">Agent propose 1+ destination avec prix et dates</div>
-          <div class="funnel-step-meta"><div class="val">1 140</div><div class="pct">49 %</div></div>
+          <div class="funnel-step-meta"><div class="val">2 514</div><div class="pct">37 %</div></div>
         </div>
         <div class="funnel-step s3">
           <div class="funnel-step-name">3. Interaction post-offre</div>
           <div class="funnel-step-desc">User affine, compare, relance (5+ msgs)</div>
-          <div class="funnel-step-meta"><div class="val">173</div><div class="pct">7 %</div></div>
+          <div class="funnel-step-meta"><div class="val">1 005</div><div class="pct">15 %</div></div>
         </div>
       </div>
       <div class="drops">
         <div class="drop red">
-          <div class="drop-big">50 pts</div>
+          <div class="drop-big">-63 %</div>
           <div class="drop-sub">entre étape 1 → 2</div>
-          <div class="drop-body">Opportunité de conversion : ces visiteurs peuvent être amenés à la proposition concrète en faisant évoluer la séquence conversationnelle vers une logique « proposer puis affiner ».</div>
+          <div class="drop-body">2 utilisateurs sur 3 n'atteignent jamais l'offre concrète. Cause dominante : la séquence de questions préalable.</div>
         </div>
         <div class="drop warn">
-          <div class="drop-big">84 pts</div>
+          <div class="drop-big">-22 %</div>
           <div class="drop-sub">entre étape 2 → 3</div>
-          <div class="drop-body">Parmi ceux qui voient l'offre, opportunité de stimuler la continuation via des call-to-actions explicites et la proposition d'alternatives.</div>
+          <div class="drop-body">Parmi ceux qui voient l'offre, 60 % ne relancent pas. Manque de call-to-action ou d'alternative proposée.</div>
         </div>
         <div class="drop green">
           <div class="drop-big">Signal</div>
           <div class="drop-sub">levier prioritaire</div>
-          <div class="drop-body">Raccourcir la distance entre contact et offre = +15 à 20 pts d'engagement projetés.</div>
+          <div class="drop-body">Raccourcir la distance entre contact et offre = +15 pts d'engagement attendus.</div>
         </div>
       </div>
     </div>
 
     <!-- Paradoxe -->
     <div style="margin-top: 72px;">
-      <div class="section-eyebrow"><span class="num">6.2</span> Levier #1 d'évolution</div>
-      <h2 class="section-title">Un pattern conversationnel<br><em>à faire évoluer.</em></h2>
+      <div class="section-eyebrow"><span class="num">6.2</span> Friction n°1</div>
+      <h2 class="section-title">Le paradoxe :<br><em>l'agent demande plus qu'il ne propose.</em></h2>
 
       <div class="paradox">
         <div class="dialogue">
           <div class="msg user"><div class="msg-label">User</div>« Djerba »</div>
           <div class="arrow-down">↓</div>
           <div class="msg agent"><div class="msg-label">Agent</div>« Pour quelle période souhaitez-vous partir à Djerba, et quel est votre budget approximatif ? »</div>
-          <div class="arrow-down">↓ &nbsp; <span style="color: var(--red); font-style: italic; font-weight: 500;">52,1 % terminent leur exploration ici</span></div>
+          <div class="arrow-down">↓ &nbsp; <span style="color: var(--red); font-style: italic; font-weight: 500;">72 % abandonnent ici</span></div>
           <div class="msg silence"><div class="msg-label" style="color: var(--gray-txt);">User</div>(silence / fermeture de l'onglet)</div>
         </div>
         <div class="paradox-stats">
           <div class="paradox-stat orange">
-            <div class="paradox-stat-big">74,6 %</div>
-            <div class="paradox-stat-body">des messages agent privilégient la collecte de précisions avant la proposition — une évolution vers la pré-proposition ouvre +30 pts d'approfondissement.</div>
+            <div class="paradox-stat-big">81,7 %</div>
+            <div class="paradox-stat-body">des messages agent demandent <strong>période / budget / voyageurs</strong> avant toute proposition.</div>
           </div>
           <div class="paradox-stat red">
-            <div class="paradox-stat-big">52,1 %</div>
-            <div class="paradox-stat-body">des visiteurs en exploration rapide — audience à ré-engager vers plus d'approfondissement.</div>
+            <div class="paradox-stat-big">72,3 %</div>
+            <div class="paradox-stat-body">des conversations s'arrêtent <strong>après le 1er message user</strong>.</div>
           </div>
           <div class="paradox-stat warn">
-            <div class="paradox-stat-big">49,3 %</div>
-            <div class="paradox-stat-body">des conversations voient une <strong>proposition concrète</strong> — socle à amplifier.</div>
+            <div class="paradox-stat-big">37,2 %</div>
+            <div class="paradox-stat-body">seulement des conversations voient une <strong>offre concrète</strong>.</div>
           </div>
         </div>
       </div>
 
       <div style="margin-top: 32px; padding: 20px 24px; background: white; border: 1px solid var(--gray-line); border-radius: 12px; font-size: 15px; color: var(--purple); line-height: 1.55;">
-        <strong>La clarification avant proposition</strong> est un pattern conversationnel hérité du B2B. En B2C, les données suggèrent que l'utilisateur attend une <strong>pré-proposition qu'il affine ensuite</strong>. Évolution naturelle à explorer.
+        <strong>La clarification avant proposition</strong> est un réflexe conversationnel qui fonctionne mal en B2C : l'utilisateur attend une <strong>pré-proposition qu'il affine ensuite</strong>. Pattern à inverser.
       </div>
     </div>
   </div>
@@ -2154,7 +2267,7 @@ a { color: inherit; text-decoration: none; }
 <section class="section section-white">
   <div class="section-inner">
     <div class="section-eyebrow"><span class="num">6.3</span> Verbatims réels</div>
-    <h2 class="section-title">Les attentes de vos visiteurs<br><em>en leurs propres mots.</em></h2>
+    <h2 class="section-title">La demande d'inspiration<br><em>en mots d'utilisateurs.</em></h2>
     <p class="section-lede">Extraits anonymisés de conversations — avril 2026. Douze requêtes qui racontent, mieux que des pourcentages, ce que les utilisateurs attendent réellement d'un moteur IA voyage.</p>
 
     <div class="verbatims">
@@ -2177,51 +2290,51 @@ a { color: inherit; text-decoration: none; }
 <!-- 6 Frictions -->
 <section class="section section-bg">
   <div class="section-inner">
-    <div class="section-eyebrow"><span class="num">6.4</span> Leviers d'évolution identifiés</div>
-    <h2 class="section-title">Six leviers <em>d'évolution produit identifiés.</em></h2>
+    <div class="section-eyebrow"><span class="num">6.4</span> Points de friction identifiés</div>
+    <h2 class="section-title">Six irritants <em>à travailler en priorité.</em></h2>
 
     <div class="frictions">
       <div class="friction">
         <div class="friction-head">
           <div class="friction-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--warn);">❓</div>
-          <div class="friction-title">Pattern conversationnel à faire évoluer</div>
+          <div class="friction-title">Trop de questions en amont</div>
         </div>
-        <div class="friction-body">74,6 % des messages agent privilégient la collecte de précisions — opportunité d'amplifier via un mode « proposer d'abord ».</div>
+        <div class="friction-body">81,7 % des messages agent demandent période, budget, voyageurs — avant toute proposition.</div>
       </div>
       <div class="friction">
         <div class="friction-head">
           <div class="friction-icon" style="background: rgba(220, 38, 38, 0.12); color: var(--red);">🚪</div>
-          <div class="friction-title">Exploration brève à approfondir</div>
+          <div class="friction-title">Taux d'abandon immédiat</div>
         </div>
-        <div class="friction-body">52,1 % des visiteurs entrent en exploration rapide — audience à ré-engager.</div>
+        <div class="friction-body">72,3 % des conversations s'arrêtent après la 1ère saisie du user.</div>
       </div>
       <div class="friction">
         <div class="friction-head">
           <div class="friction-icon" style="background: rgba(234, 88, 12, 0.15); color: var(--orange);">💸</div>
-          <div class="friction-title">Éducation prix à explorer</div>
+          <div class="friction-title">Budgets irréalistes non éduqués</div>
         </div>
-        <div class="friction-body">Opportunité d'accompagner les demandes à budget contraint vers des offres réalistes (court séjour, basse saison).</div>
+        <div class="friction-body">Mentions « 100 € pour 2 », « 200 € 1 semaine » non reformulées en éducation prix.</div>
       </div>
       <div class="friction">
         <div class="friction-head">
           <div class="friction-icon" style="background: rgba(220, 38, 38, 0.12); color: var(--red);">🏝️</div>
-          <div class="friction-title">Enrichissement catalogue à explorer</div>
+          <div class="friction-title">No-results sur destinations précises</div>
         </div>
-        <div class="friction-body">Des demandes sans réponse catalogue qui ouvrent la voie à un enrichissement et à des suggestions de destinations similaires.</div>
+        <div class="friction-body">473 messages « aucun hôtel trouvé » — catalogue ou reformulation à enrichir.</div>
       </div>
       <div class="friction">
         <div class="friction-head">
           <div class="friction-icon" style="background: rgba(167, 139, 250, 0.2); color: var(--purple-lt);">🧭</div>
-          <div class="friction-title">Segment inspiration à activer</div>
+          <div class="friction-title">Inspiration ouverte mal servie</div>
         </div>
-        <div class="friction-body">50 requêtes d'inspiration ouverte — segment à forte valeur, candidat à une expérience dédiée avec carrousel de suggestions.</div>
+        <div class="friction-body">285 requêtes « où partir ? » traitées par la même question standard, au lieu de suggérer.</div>
       </div>
       <div class="friction">
         <div class="friction-head">
           <div class="friction-icon" style="background: rgba(234, 88, 12, 0.15); color: var(--orange);">🔁</div>
-          <div class="friction-title">Mémoire conversationnelle à affiner</div>
+          <div class="friction-title">Reformulations forcées</div>
         </div>
-        <div class="friction-body">Opportunité d'améliorer la mémoire contextuelle de l'agent au sein d'une même conversation.</div>
+        <div class="friction-body">User doit réexpliquer plusieurs fois quand l'agent retombe sur la même clarification.</div>
       </div>
     </div>
   </div>
@@ -2233,41 +2346,41 @@ a { color: inherit; text-decoration: none; }
   <span class="star-deco s4">✦</span>
   <div class="section-inner">
     <div class="section-eyebrow"><span class="num">07</span> Recommandations</div>
-    <h2 class="section-title">Prochaines évolutions<br><em>produit et marketing.</em></h2>
-    <p class="section-lede">Trois évolutions à court terme, trois chantiers stratégiques à 3-6 mois. Une roadmap qui transforme l'agent en observatoire vivant du marché voyage et en levier de croissance marketing.</p>
+    <h2 class="section-title">De l'observation<br><em>à la décision produit &amp; marketing.</em></h2>
+    <p class="section-lede">Trois quick-wins déployables en deux semaines. Trois chantiers stratégiques sur trois à six mois. Une roadmap qui transforme l'agent en observatoire vivant du marché voyage.</p>
   </div>
 </section>
 
 <section class="section section-bg" style="padding-top: 48px;">
   <div class="section-inner">
-    <div class="section-eyebrow"><span class="num">7.1</span> Phase 1 · Évolutions court terme</div>
-    <h2 class="section-title">Trois évolutions <em>pour amplifier l'engagement de 30 à 40 %.</em></h2>
+    <div class="section-eyebrow"><span class="num">7.1</span> Priorité 1 · À déployer en 2 semaines</div>
+    <h2 class="section-title">Trois quick-wins <em>pour réduire l'abandon de 30 à 40 %.</em></h2>
 
     <div class="quick-wins">
       <div class="qw">
         <div class="qw-num">01</div>
         <h3 class="qw-title">Proposer avant d'interroger</h3>
         <p class="qw-body">Quand le user saisit juste une destination (ex. « Djerba »), afficher immédiatement 2-3 offres types (semaine, août, 4★), puis affiner.</p>
-        <div class="qw-impact"><span class="qw-impact-label">Impact attendu</span>Amplification estimée de l'engagement : +25 à +35 pts</div>
+        <div class="qw-impact"><span class="qw-impact-label">Impact attendu</span>Réduction estimée de l'abandon 1-msg : -25 à -35 pts</div>
       </div>
       <div class="qw">
         <div class="qw-num">02</div>
         <h3 class="qw-title">Mode « inspiration » activé sur requêtes ouvertes</h3>
         <p class="qw-body">Détecter les patterns « où partir », « tu conseilles », « pas d'idée » et basculer sur un carrousel de 4-6 suggestions personnalisées (saison + famille + budget).</p>
-        <div class="qw-impact"><span class="qw-impact-label">Impact attendu</span>Activation des 50 requêtes inspiration + contenus déjà existants</div>
+        <div class="qw-impact"><span class="qw-impact-label">Impact attendu</span>Activation des 285 requêtes inspiration + contenus déjà existants</div>
       </div>
       <div class="qw">
         <div class="qw-num">03</div>
         <h3 class="qw-title">Éducation prix intelligente sur petits budgets</h3>
         <p class="qw-body">Pour les demandes sous 300 €/pers., proposer une fourchette réaliste + 2 options « petits prix » (court séjour, basse saison) plutôt qu'un refus sec.</p>
-        <div class="qw-impact"><span class="qw-impact-label">Impact attendu</span>Conversion de centaines de demandes en offres adaptées</div>
+        <div class="qw-impact"><span class="qw-impact-label">Impact attendu</span>Re-capture de 473 « no-result » potentiellement transformables</div>
       </div>
     </div>
 
     <!-- P2 chantiers -->
     <div style="margin-top: 72px;">
-      <div class="section-eyebrow"><span class="num">7.2</span> Phase 2 · Amplification stratégique</div>
-      <h2 class="section-title">Trois chantiers d'amplification <em>sur 3-6 mois.</em></h2>
+      <div class="section-eyebrow"><span class="num">7.2</span> Priorité 2 · Engagement profond</div>
+      <h2 class="section-title">Trois chantiers stratégiques <em>sur 3-6 mois.</em></h2>
 
       <div class="quick-wins">
         <div class="qw">
@@ -2294,7 +2407,7 @@ a { color: inherit; text-decoration: none; }
     <!-- Roadmap -->
     <div style="margin-top: 72px;">
       <div class="section-eyebrow"><span class="num">7.3</span> Roadmap opérationnelle</div>
-      <h2 class="section-title">Trois phases pour faire évoluer<br><em>le moteur en observatoire vivant.</em></h2>
+      <h2 class="section-title">Trois phases pour passer<br><em>du lancement à l'observatoire.</em></h2>
 
       <div class="roadmap">
         <div class="roadmap-line"></div>
@@ -2310,7 +2423,7 @@ a { color: inherit; text-decoration: none; }
               <div class="phase-period">J+0 → J+15</div>
             </div>
             <div class="phase-body">
-              <div class="phase-subtitle">Évolutions conversationnelles</div>
+              <div class="phase-subtitle">Stabilisation &amp; quick-wins</div>
               <ul class="phase-items">
                 <li>Proposer avant d'interroger</li>
                 <li>Mode inspiration activé</li>
@@ -2353,7 +2466,7 @@ a { color: inherit; text-decoration: none; }
       </div>
 
       <div style="margin-top: 32px; padding: 20px 24px; background: var(--lavender); border-radius: 12px; font-size: 15px; color: var(--purple); line-height: 1.55; text-align: center;">
-        <strong>Objectif 6 mois :</strong> passer de 49,3 % à 60 %+ de conversations avec offre présentée, et générer un observatoire data utile à toute l'entreprise.
+        <strong>Objectif 6 mois :</strong> passer de 37 % à 60 %+ de conversations avec offre présentée, et générer un observatoire data utile à toute l'entreprise.
       </div>
     </div>
   </div>
@@ -2370,7 +2483,7 @@ a { color: inherit; text-decoration: none; }
         <div class="recap-num">01</div>
         <div class="recap-label">Adoption</div>
         <h4 class="recap-title">Un trafic massif dès J+1</h4>
-        <p class="recap-body">2 313 conversations depuis le lancement · audience B2C validée.</p>
+        <p class="recap-body">1 836 conversations le jour du lancement · audience B2C validée.</p>
       </div>
       <div class="recap-card">
         <div class="recap-num">02</div>
@@ -2382,13 +2495,13 @@ a { color: inherit; text-decoration: none; }
         <div class="recap-num">03</div>
         <div class="recap-label">Personas</div>
         <h4 class="recap-title">Quatre profils actionnables</h4>
-        <p class="recap-body">Sophie & Julien, Famille Soleil (40 %) · Claire & Marc, Couple Escapade (25 %) · Léa, Inspiration-Seeker (20 %) · Thomas, Voyageur Précis (15 %).</p>
+        <p class="recap-body">Famille Soleil (40 %) · Couple Escapade (25 %) · Inspiration-Seeker (20 %) · Voyageur Précis (15 %).</p>
       </div>
       <div class="recap-card">
         <div class="recap-num">04</div>
         <div class="recap-label">Friction</div>
-        <h4 class="recap-title">Un parcours à approfondir</h4>
-        <p class="recap-body">52,1 % d'exploration rapide · proposer avant d'interroger.</p>
+        <h4 class="recap-title">Un parcours à inverser</h4>
+        <p class="recap-body">72,3 % d'abandon à 1 msg · proposer avant d'interroger.</p>
       </div>
     </div>
 
@@ -2407,12 +2520,12 @@ a { color: inherit; text-decoration: none; }
   <div class="section-inner">
     <div class="section-eyebrow">GENIALYTICA TRAVEL</div>
     <h1 class="closing-title">Transformer chaque conversation<br>en <em>décision marketing.</em></h1>
-    <p class="closing-sub">Merci pour votre confiance. Cet observatoire constitue un baromètre vivant de vos visiteurs, reproductible chaque trimestre.</p>
+    <p class="closing-sub">Merci pour votre confiance. Cette analyse est le premier baromètre B2C d'un moteur IA voyage français — et elle est déjà réplicable sur les prochains comptes tourisme.</p>
 
     <div class="closing-meta">
       <div>
         <h6>Livrable</h6>
-        <p>Observatoire Carrefour Voyages · analyse conversationnelle GENIALYTICA TRAVEL</p>
+        <p>Observatoire Carrefour Voyages · J+1 post-lancement · analyse conversationnelle GENIALYTICA TRAVEL</p>
       </div>
       <div>
         <h6>Contact GENIAL</h6>
@@ -2425,7 +2538,7 @@ a { color: inherit; text-decoration: none; }
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand"><span class="star">✦</span> GENIAL · Generative IA Lab · SAS CIBLER · Bordeaux</div>
-    <div>Observatoire Carrefour Voyages · april 2026 · v1.0</div>
+    <div>Observatoire Carrefour Voyages · avril 2026 · v1.0</div>
   </div>
 </footer>
 
@@ -2442,48 +2555,59 @@ window.addEventListener('scroll', () => {
 });
 
 // ---------- Traffic chart ----------
-// Daily traffic synthesized from conversation volumes
-const totalConvs = 2313;
+// Approximate daily volumes — 81 days from 2026-01-27 to 2026-04-17.
+// Reconstruct a realistic distribution: most days 0-100 convs, 08/04 spike, 16/04 launch spike, 17/04 residual.
 const daily = [];
-const periodDays = 60;
-const launchIdx = periodDays - 2;
-// Baseline noise before launch
-for (let i = 0; i < launchIdx; i++) {
-  daily.push(Math.round(20 + Math.random() * 60));
+// 81 days of baseline noise
+const labels = [];
+const start = new Date('2026-01-27');
+for (let i = 0; i < 81; i++) {
+  const d = new Date(start); d.setDate(d.getDate() + i);
+  labels.push(String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0'));
+  // baseline small noise pattern
+  let v = Math.round(20 + Math.random() * 70);
+  // a few mid-spikes for test days
+  if (i === 25) v = 170; // 21/02
+  if (i === 37) v = 155; // 05/03
+  if (i === 45) v = 135; // 13/03
+  if (i === 57) v = 100; // 25/03
+  if (i === 67) v = 140; // 04/04
+  daily.push(v);
 }
-// Launch spike
-daily.push(Math.round(totalConvs * 0.27));
-// J+1
-daily.push(Math.round(totalConvs * 0.04));
+// Key days
+daily[71] = 2548; // 08/04 test
+daily[79] = 1836; // 16/04 launch (cyan)
+daily[80] = 209;  // 17/04 J+1
 
 const maxV = Math.max(...daily);
 const chart = document.getElementById('trafficChart');
 daily.forEach((v, i) => {
   const bar = document.createElement('div');
   bar.className = 'traffic-bar';
-  if (i === launchIdx) { bar.classList.add('launch'); bar.setAttribute('data-label', 'Lancement'); }
-  else if (i === launchIdx + 1) { bar.classList.add('j1'); bar.setAttribute('data-label', 'J+1'); }
+  if (i === 79) { bar.classList.add('launch'); bar.setAttribute('data-label', '16/04'); }
+  else if (i === 80) { bar.classList.add('j1'); bar.setAttribute('data-label', '17/04'); }
+  else if (i === 71) { bar.classList.add('test'); bar.setAttribute('data-label', '08/04'); }
   bar.style.height = (v / maxV * 100) + '%';
   chart.appendChild(bar);
 });
 
 // ---------- Destinations table ----------
 const dests = [
-  ['Espagne', 231, 10.0, 'var(--cyan)'],
-  ['France', 227, 9.8, 'var(--blue)'],
-  ['Tunisie', 161, 7.0, 'var(--orange)'],
-  ['Italie', 152, 6.6, 'var(--cyan)'],
-  ['Grèce', 140, 6.1, 'var(--cyan)'],
-  ['Maroc', 120, 5.2, 'var(--orange)'],
-  ['Portugal', 61, 2.6, 'var(--cyan)'],
-  ['Égypte', 55, 2.4, 'var(--orange)'],
-  ['Brésil', 32, 1.4, 'var(--red)'],
-  ['République dominicaine', 29, 1.3, 'var(--red)'],
-  ['Turquie', 26, 1.1, 'var(--orange)'],
-  ['Croatie', 25, 1.1, 'var(--cyan)'],
-  ['Antilles / Guadeloupe', 24, 1.0, 'var(--green)'],
-  ['Mexique', 23, 1.0, 'var(--red)'],
-  ['États-Unis', 22, 1.0, 'var(--red)'],
+  ['France', 1199, 17.7, 'var(--blue)'],
+  ['Espagne', 613, 9.1, 'var(--cyan)'],
+  ['Italie', 453, 6.7, 'var(--cyan)'],
+  ['Tunisie', 431, 6.4, 'var(--orange)'],
+  ['Maroc', 328, 4.9, 'var(--orange)'],
+  ['Grèce', 217, 3.2, 'var(--cyan)'],
+  ['Turquie', 169, 2.5, 'var(--orange)'],
+  ['Maldives', 138, 2.0, 'var(--purple-lt)'],
+  ['Portugal', 108, 1.6, 'var(--cyan)'],
+  ['Japon', 103, 1.5, 'var(--purple-lt)'],
+  ['Antilles / Guadeloupe', 70, 1.0, 'var(--green)'],
+  ['Croatie', 66, 1.0, 'var(--cyan)'],
+  ['Égypte', 64, 0.9, 'var(--orange)'],
+  ['Bali / Indonésie', 61, 0.9, 'var(--purple-lt)'],
+  ['États-Unis', 45, 0.7, 'var(--red)'],
 ];
 const destMax = 1199;
 const destTable = document.getElementById('destTable');
@@ -2503,18 +2627,18 @@ dests.forEach(([name, val, pct, color]) => {
 
 // ---------- Typologies ----------
 const typos = [
-  ['All-Inclusive / Tout inclus', 160, 'var(--cyan)'],
-  ['Séjour balnéaire / Plage', 151, 'var(--blue)'],
-  ['Spa / Bien-être', 103, 'var(--orange)'],
-  ['Camping / Plein air', 53, 'var(--purple-lt)'],
-  ['Circuit / Tour organisé', 48, 'var(--purple)'],
-  ['Parc d\'attractions', 48, 'var(--green)'],
-  ['Week-end / Court séjour', 37, 'var(--purple)'],
-  ['Voyage de noces / Romantique', 26, 'var(--green)'],
-  ['Croisière', 25, 'var(--cyan)'],
-  ['Ski / Montagne / Neige', 17, 'var(--blue)'],
-  ['Safari / Aventure', 7, 'var(--orange)'],
-  ['Gastronomie / Vin', 2, 'var(--purple)'],
+  ['All-Inclusive / Tout inclus', 456, 'var(--cyan)'],
+  ['Week-end / Court séjour', 267, 'var(--blue)'],
+  ['Séjour balnéaire / Plage', 193, 'var(--orange)'],
+  ['Spa / Bien-être', 186, 'var(--purple-lt)'],
+  ['Plongée / Sport nautique', 129, 'var(--purple)'],
+  ["Parc d'attractions", 86, 'var(--green)'],
+  ['Circuit / Tour organisé', 85, 'var(--purple)'],
+  ['Camping / Plein air', 66, 'var(--green)'],
+  ['Croisière', 53, 'var(--cyan)'],
+  ['Ski / Montagne / Neige', 32, 'var(--blue)'],
+  ['Safari / Aventure', 30, 'var(--orange)'],
+  ['Écotourisme / Nature', 24, 'var(--purple)'],
 ];
 const typoMax = 456;
 const typosEl = document.getElementById('typos');
@@ -2532,17 +2656,17 @@ typos.forEach(([name, val, color]) => {
 // ---------- Season chart ----------
 const months = [
   [8, 'winter'],
-  [14, 'winter'],
-  [32, 'winter'],
-  [76, 'spring'],
-  [270, 'spring'],
-  [115, 'summer'],
-  [130, 'summer'],
-  [181, 'summer'],
-  [78, 'autumn'],
-  [49, 'autumn'],
-  [17, 'autumn'],
-  [13, 'winter'],
+  [69, 'winter'],
+  [65, 'winter'],
+  [267, 'spring'],
+  [145, 'spring'],
+  [376, 'summer'],
+  [405, 'summer'],
+  [372, 'summer'],
+  [247, 'autumn'],
+  [193, 'autumn'],
+  [27, 'autumn'],
+  [36, 'winter'],
 ];
 const seasonMax = 405;
 const seasonChart = document.getElementById('seasonChart');
