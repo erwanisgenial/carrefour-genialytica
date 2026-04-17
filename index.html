@@ -1,0 +1,2570 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Observatoire Carrefour Voyages · GENIALYTICA TRAVEL</title>
+<meta name="description" content="Analyse conversationnelle J+1 du moteur de recherche IA de Carrefour Voyages — 6 760 conversations, 12 verbatims, 4 personas, 3 bassins géographiques. Méthodologie GENIALYTICA TRAVEL par GENIAL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #2F2377;
+  --cyan: #1BCFFF;
+  --dark: #120D35;
+  --white: #FFFFFF;
+  --bg: #FAFAFC;
+  --gray-bg: #F5F5F7;
+  --gray-line: #E5E7EB;
+  --gray-txt: #4A4A5A;
+  --lavender: #E8E5F0;
+  --red: #DC2626;
+  --orange: #EA580C;
+  --green: #16A34A;
+  --blue: #2563EB;
+  --purple-lt: #A78BFA;
+  --warn: #F59E0B;
+  --shadow-sm: 0 1px 3px rgba(18, 13, 53, 0.06);
+  --shadow-md: 0 4px 16px rgba(47, 35, 119, 0.08);
+  --shadow-lg: 0 16px 48px rgba(47, 35, 119, 0.12);
+  --radius: 12px;
+  --radius-lg: 20px;
+  --font-display: 'Fraunces', 'Poppins', Georgia, serif;
+  --font-sans: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
+  --max-w: 1180px;
+  --wide-w: 1320px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--dark);
+  background: var(--bg);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Progress bar ---------- */
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--purple), var(--cyan));
+  width: 0%;
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+}
+
+/* ---------- Top nav ---------- */
+.topnav {
+  position: sticky;
+  top: 3px;
+  background: rgba(250, 250, 252, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--gray-line);
+  z-index: 100;
+  padding: 14px 40px;
+}
+.topnav-inner {
+  max-width: var(--wide-w);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+.topnav-brand {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--purple);
+  letter-spacing: -0.2px;
+}
+.topnav-brand .star { color: var(--cyan); margin-right: 4px; }
+.topnav-ctx {
+  font-size: 12px;
+  color: var(--gray-txt);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.topnav-tag {
+  padding: 5px 12px;
+  background: var(--purple);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  background:
+    radial-gradient(ellipse at 70% 30%, rgba(27, 207, 255, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(167, 139, 250, 0.08) 0%, transparent 50%),
+    linear-gradient(135deg, #120D35 0%, #2F2377 100%);
+  color: white;
+  padding: 120px 40px 140px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  color: var(--cyan);
+  font-size: 20px;
+  opacity: 0.6;
+}
+.hero::before { top: 80px; left: 10%; }
+.hero::after { bottom: 120px; right: 12%; font-size: 28px; }
+
+.star-deco {
+  position: absolute;
+  color: var(--cyan);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.star-deco.s1 { top: 15%; left: 8%; font-size: 16px; }
+.star-deco.s2 { top: 22%; right: 14%; font-size: 22px; opacity: 0.35; }
+.star-deco.s3 { bottom: 22%; left: 18%; font-size: 12px; opacity: 0.4; }
+.star-deco.s4 { bottom: 14%; right: 22%; font-size: 28px; opacity: 0.5; }
+.star-deco.s5 { top: 48%; right: 6%; font-size: 14px; opacity: 0.3; }
+
+.hero-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.hero-eyebrow {
+  color: var(--cyan);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '';
+  flex: 0 0 40px;
+  height: 1px;
+  background: var(--cyan);
+  opacity: 0.5;
+}
+.hero-eyebrow::after { display: none; }
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 30;
+  font-size: clamp(48px, 7vw, 92px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  margin-bottom: 32px;
+  max-width: 900px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--cyan);
+  font-weight: 400;
+}
+
+.hero-lede {
+  font-size: clamp(18px, 1.5vw, 22px);
+  font-weight: 300;
+  line-height: 1.5;
+  max-width: 640px;
+  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 64px;
+}
+
+.hero-meta {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 28px;
+  max-width: 820px;
+}
+.hero-meta dt {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 8px;
+}
+.hero-meta dd {
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+}
+
+/* ---------- Sections ---------- */
+.section {
+  padding: 96px 40px;
+  position: relative;
+}
+.section-white { background: var(--white); }
+.section-bg { background: var(--bg); }
+.section-dark {
+  background: linear-gradient(135deg, #120D35 0%, #2F2377 100%);
+  color: white;
+  padding: 140px 40px;
+}
+.section-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+.section-wide {
+  max-width: var(--wide-w);
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-eyebrow .num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--purple);
+  font-feature-settings: "tnum";
+  padding-right: 12px;
+  border-right: 1px solid var(--gray-line);
+}
+.section-dark .section-eyebrow .num { color: var(--cyan); border-right-color: rgba(255,255,255,0.2); }
+
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144;
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--purple);
+  margin-bottom: 24px;
+  max-width: 900px;
+}
+.section-dark .section-title { color: white; }
+.section-title em { font-style: italic; color: var(--cyan); }
+.section-title strong { font-weight: 700; }
+
+.section-lede {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--gray-txt);
+  max-width: 720px;
+  margin-bottom: 64px;
+  font-weight: 300;
+}
+.section-dark .section-lede { color: rgba(255,255,255,0.78); }
+
+/* ---------- Signal cards (3 signals) ---------- */
+.signals {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.signal {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+.signal-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 999px;
+  margin-bottom: 28px;
+}
+.signal.adopt .signal-label { background: rgba(27, 207, 255, 0.15); color: #0891b2; }
+.signal.friction .signal-label { background: rgba(234, 88, 12, 0.12); color: var(--orange); }
+.signal.opp .signal-label { background: rgba(47, 35, 119, 0.1); color: var(--purple); }
+
+.signal-big {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 80px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-bottom: 12px;
+  font-feature-settings: "tnum";
+}
+.signal.adopt .signal-big { color: var(--cyan); }
+.signal.friction .signal-big { color: var(--orange); }
+.signal.opp .signal-big { color: var(--purple); }
+
+.signal-sub {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-txt);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.signal-body {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--dark);
+}
+
+/* ---------- 5 Dimensions ---------- */
+.dimensions {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--gray-line);
+  border-bottom: 1px solid var(--gray-line);
+}
+.dim {
+  padding: 40px 24px 48px;
+  border-right: 1px solid var(--gray-line);
+  position: relative;
+  transition: background 0.3s;
+}
+.dim:last-child { border-right: none; }
+.dim:hover { background: var(--gray-bg); }
+.dim-num {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 48px;
+  color: var(--purple);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-feature-settings: "tnum";
+  margin-bottom: 24px;
+  opacity: 0.9;
+}
+.dim-title {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--purple);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.dim-body {
+  font-size: 13.5px;
+  color: var(--gray-txt);
+  line-height: 1.5;
+}
+
+/* ---------- KPI strip ---------- */
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.kpi {
+  padding: 32px 20px;
+  border-right: 1px solid var(--gray-line);
+  text-align: left;
+}
+.kpi:last-child { border-right: none; }
+.kpi-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 14px;
+}
+.kpi-value {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 36px;
+  color: var(--purple);
+  line-height: 1;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+  font-feature-settings: "tnum";
+}
+.kpi-sub {
+  font-size: 12px;
+  color: var(--gray-txt);
+  font-style: italic;
+}
+
+/* ---------- Traffic chart ---------- */
+.traffic-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow-md);
+  margin-top: 40px;
+}
+.traffic-chart {
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  padding: 16px 0 0;
+  border-bottom: 1px solid var(--gray-line);
+  margin-bottom: 16px;
+}
+.traffic-bar {
+  flex: 1;
+  background: var(--gray-line);
+  border-radius: 2px 2px 0 0;
+  min-height: 2px;
+  position: relative;
+  transition: background 0.2s;
+}
+.traffic-bar.launch { background: var(--cyan); }
+.traffic-bar.test { background: var(--purple-lt); }
+.traffic-bar.j1 { background: var(--purple); }
+.traffic-bar::after {
+  content: attr(data-label);
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--purple);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.traffic-bar.launch::after,
+.traffic-bar.test::after,
+.traffic-bar.j1::after { opacity: 1; }
+
+.traffic-legend {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: var(--gray-txt);
+  margin-top: 20px;
+  align-items: center;
+}
+.traffic-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.traffic-legend-dot {
+  width: 10px; height: 10px; border-radius: 2px;
+}
+
+/* ---------- Usage profiles ---------- */
+.profiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--gray-line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: 24px;
+}
+.profile {
+  background: white;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+}
+.profile-head {
+  padding: 14px 18px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+.profile.curious .profile-head { background: var(--orange); }
+.profile.engaged .profile-head { background: var(--blue); }
+.profile.power .profile-head { background: var(--green); }
+
+.profile-pct {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 8px;
+  font-feature-settings: "tnum";
+}
+.profile.curious .profile-pct { color: var(--orange); }
+.profile.engaged .profile-pct { color: var(--blue); }
+.profile.power .profile-pct { color: var(--green); }
+
+.profile-count {
+  font-size: 13px;
+  color: var(--gray-txt);
+  margin-bottom: 18px;
+  font-style: italic;
+}
+.profile-desc {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dark);
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+.profile-example {
+  padding: 12px 14px;
+  background: var(--gray-bg);
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: var(--gray-txt);
+  font-style: italic;
+}
+
+/* ---------- Destinations chart ---------- */
+.dest-table {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+.dest-row {
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 6px 0;
+}
+.dest-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--purple);
+}
+.dest-bar-wrap {
+  height: 28px;
+  background: transparent;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.dest-bar {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  color: white;
+  font-weight: 600;
+  font-size: 12.5px;
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+  min-width: 40px;
+  transition: transform 0.3s ease;
+}
+.dest-row:hover .dest-bar { transform: translateX(2px); }
+.dest-pct {
+  font-size: 12.5px;
+  color: var(--gray-txt);
+  font-weight: 500;
+  font-feature-settings: "tnum";
+  min-width: 50px;
+}
+
+/* Region legend for destinations */
+.region-legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px 0;
+  border-top: 1px solid var(--gray-line);
+  font-size: 12px;
+  color: var(--gray-txt);
+  align-items: center;
+}
+.region-legend-item { display: flex; align-items: center; gap: 7px; }
+.region-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+/* ---------- Bassins 3 cards ---------- */
+.bassins {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+.bassin {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.bassin-head {
+  padding: 22px 28px;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15.5px;
+}
+.bassin.soleil .bassin-head { background: var(--cyan); color: var(--dark); }
+.bassin.europe .bassin-head { background: var(--blue); }
+.bassin.long .bassin-head { background: var(--purple-lt); }
+
+.bassin-body { padding: 28px; }
+.bassin-big {
+  font-family: var(--font-display);
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--purple);
+  margin-bottom: 8px;
+  font-feature-settings: "tnum";
+  letter-spacing: -0.02em;
+}
+.bassin-meta { font-size: 13px; color: var(--gray-txt); margin-bottom: 24px; font-style: italic; }
+
+.bassin-top {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.bassin-list {
+  list-style: none;
+  margin-bottom: 20px;
+}
+.bassin-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--gray-line);
+  font-size: 14px;
+}
+.bassin-list li:last-child { border-bottom: none; }
+.bassin-list .rank { font-weight: 600; color: var(--purple); }
+.bassin-list .val { color: var(--gray-txt); font-feature-settings: "tnum"; }
+
+.bassin-note {
+  font-size: 13px;
+  color: var(--gray-txt);
+  line-height: 1.5;
+  padding: 14px 16px;
+  background: var(--gray-bg);
+  border-radius: 8px;
+}
+
+/* ---------- Typologies bars ---------- */
+.typos {
+  display: grid;
+  gap: 10px;
+}
+.typo-row {
+  display: grid;
+  grid-template-columns: 220px 1fr auto;
+  align-items: center;
+  gap: 16px;
+}
+.typo-name { font-weight: 600; font-size: 14px; color: var(--purple); }
+.typo-bar-wrap { height: 26px; }
+.typo-bar {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--purple);
+}
+.typo-val { font-weight: 600; color: var(--gray-txt); font-feature-settings: "tnum"; font-size: 13px; }
+
+/* ---------- Compositions 3x2 ---------- */
+.compos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+.compo {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-line);
+}
+.compo-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.compo-icon {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.compo-name { font-weight: 600; font-size: 14.5px; color: var(--purple); }
+.compo-sub { font-size: 12px; color: var(--gray-txt); font-style: italic; }
+.compo-pct {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-feature-settings: "tnum";
+}
+
+/* ---------- Saisonnalité ---------- */
+.season {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.season-chart-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+}
+.season-chart {
+  height: 260px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  padding-top: 24px;
+  border-bottom: 1px solid var(--gray-line);
+}
+.season-bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  position: relative;
+  transition: opacity 0.2s;
+  min-height: 3px;
+}
+.season-bar.summer { background: var(--cyan); }
+.season-bar.spring { background: var(--purple); }
+.season-bar.autumn { background: var(--orange); }
+.season-bar.winter { background: var(--dark); opacity: 0.6; }
+
+.season-labels {
+  display: flex;
+  gap: 4px;
+  margin-top: 12px;
+}
+.season-label {
+  flex: 1;
+  text-align: center;
+  font-size: 11px;
+  color: var(--gray-txt);
+  font-weight: 500;
+}
+
+.windows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.window-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.window-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-line);
+}
+.window-name {
+  font-weight: 600;
+  color: var(--purple);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+}
+.window-period {
+  font-size: 12.5px;
+  color: var(--gray-txt);
+  font-style: italic;
+  margin-bottom: 10px;
+}
+.window-body {
+  font-size: 13.5px;
+  color: var(--dark);
+  line-height: 1.5;
+}
+
+/* ---------- Budgets + durations ---------- */
+.twocol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+.budget-head {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.budget-head-sub {
+  font-size: 13.5px;
+  font-style: italic;
+  color: var(--gray-txt);
+  margin-bottom: 24px;
+}
+.budget-bar-row {
+  display: grid;
+  grid-template-columns: 180px 1fr auto;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.budget-bar-name { font-weight: 600; font-size: 13.5px; color: var(--dark); }
+.budget-bar-wrap {
+  height: 22px;
+  background: var(--gray-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.budget-bar {
+  height: 100%;
+  border-radius: 4px;
+}
+.budget-val { font-weight: 600; font-size: 12.5px; color: var(--gray-txt); font-feature-settings: "tnum"; }
+
+/* ---------- Personas 2x2 ---------- */
+.personas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+.persona {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.persona-head {
+  padding: 22px 28px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.persona.famille .persona-head { background: var(--orange); }
+.persona.couple .persona-head { background: var(--purple-lt); }
+.persona.leseeker .persona-head { background: var(--cyan); color: var(--dark); }
+.persona.thomas .persona-head { background: var(--blue); }
+
+.persona-head-left { display: flex; align-items: center; gap: 12px; }
+.persona-emoji { font-size: 26px; }
+.persona-name { font-weight: 600; font-size: 16.5px; }
+.persona-share {
+  padding: 6px 14px;
+  background: white;
+  color: var(--purple);
+  font-weight: 700;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-feature-settings: "tnum";
+}
+.persona.leseeker .persona-share { color: var(--cyan); }
+
+.persona-body {
+  padding: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.persona-col h5 {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.persona-col p {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+.persona-col p:last-child { margin-bottom: 0; }
+.persona-verbatim {
+  grid-column: span 2;
+  padding: 14px 18px;
+  background: var(--gray-bg);
+  border-radius: 10px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--purple);
+  font-weight: 500;
+}
+.persona-verbatim::before { content: '« '; }
+.persona-verbatim::after { content: ' »'; }
+
+/* ---------- Intents ---------- */
+.intents {
+  display: grid;
+  gap: 14px;
+}
+.intent {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  display: grid;
+  grid-template-columns: 130px 1fr 320px;
+  gap: 28px;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-line);
+}
+.intent-pct {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-feature-settings: "tnum";
+}
+.intent.precise .intent-pct { color: var(--blue); }
+.intent.inspire .intent-pct { color: var(--cyan); }
+.intent.compare .intent-pct { color: var(--purple-lt); }
+.intent.practical .intent-pct { color: var(--orange); }
+
+.intent-title { font-weight: 600; font-size: 15.5px; color: var(--purple); margin-bottom: 4px; }
+.intent-desc { font-size: 13.5px; color: var(--gray-txt); line-height: 1.4; }
+.intent-example {
+  padding: 12px 16px;
+  background: var(--gray-bg);
+  border-radius: 8px;
+  font-style: italic;
+  font-size: 12.5px;
+  color: var(--gray-txt);
+}
+
+/* ---------- Funnel ---------- */
+.funnel {
+  display: grid;
+  grid-template-columns: 2.5fr 1fr;
+  gap: 40px;
+  margin-top: 32px;
+}
+.funnel-bars { display: flex; flex-direction: column; gap: 24px; }
+.funnel-step {
+  background: white;
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  color: white;
+  position: relative;
+}
+.funnel-step.s1 { background: var(--purple); width: 100%; }
+.funnel-step.s2 { background: var(--cyan); width: 37%; color: var(--dark); }
+.funnel-step.s3 { background: var(--green); width: 15%; min-width: 180px; }
+
+.funnel-step-name {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.funnel-step-desc {
+  font-size: 12.5px;
+  opacity: 0.85;
+  font-style: italic;
+}
+.funnel-step-meta {
+  position: absolute;
+  right: -110px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: left;
+  color: var(--dark);
+}
+.funnel-step-meta .val {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--purple);
+  font-feature-settings: "tnum";
+}
+.funnel-step-meta .pct { font-size: 12px; color: var(--gray-txt); font-style: italic; }
+
+.drops { display: flex; flex-direction: column; gap: 16px; }
+.drop {
+  background: white;
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  border: 1.5px solid;
+}
+.drop.red { border-color: var(--red); }
+.drop.warn { border-color: var(--warn); }
+.drop.green { border-color: var(--green); }
+.drop-big {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 1;
+  margin-bottom: 6px;
+  font-feature-settings: "tnum";
+  letter-spacing: -0.02em;
+}
+.drop.red .drop-big { color: var(--red); }
+.drop.warn .drop-big { color: var(--warn); }
+.drop.green .drop-big { color: var(--green); }
+.drop-sub { font-size: 12px; color: var(--gray-txt); font-style: italic; margin-bottom: 10px; }
+.drop-body { font-size: 13px; color: var(--dark); line-height: 1.45; }
+
+/* ---------- Verbatims grid ---------- */
+.verbatims {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+.verbatim {
+  background: white;
+  border-radius: var(--radius);
+  padding: 24px 24px 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-line);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 140px;
+}
+.verbatim-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--purple);
+  margin-bottom: 16px;
+  padding-left: 20px;
+  position: relative;
+}
+.verbatim-quote::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  top: -6px;
+  font-family: var(--font-display);
+  font-size: 34px;
+  line-height: 1;
+  color: var(--cyan);
+  font-weight: 400;
+}
+.verbatim-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--cyan);
+  letter-spacing: 0.5px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gray-line);
+}
+.verbatim-tag::before { content: '— '; color: var(--gray-txt); }
+
+/* ---------- 6 Frictions ---------- */
+.frictions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+.friction {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-line);
+}
+.friction-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.friction-icon {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.friction-title { font-weight: 600; font-size: 15px; color: var(--purple); line-height: 1.3; }
+.friction-body { font-size: 13.5px; line-height: 1.5; color: var(--dark); }
+
+/* ---------- Paradoxe ---------- */
+.paradox {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin-top: 32px;
+  align-items: center;
+}
+.dialogue {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.msg {
+  padding: 16px 20px;
+  border-radius: 14px;
+  font-size: 14px;
+  max-width: 80%;
+  line-height: 1.4;
+}
+.msg.user { background: var(--lavender); color: var(--dark); align-self: flex-start; }
+.msg.agent { background: #E0F2FE; color: var(--dark); align-self: flex-start; margin-left: 40px; font-style: italic; }
+.msg.silence { background: var(--gray-bg); color: var(--gray-txt); align-self: flex-start; font-style: italic; font-size: 13px; }
+.msg-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 4px;
+}
+.msg.agent .msg-label { color: var(--blue); }
+.arrow-down {
+  text-align: center;
+  color: var(--red);
+  font-weight: 700;
+  font-size: 14px;
+  margin: -4px 0;
+}
+
+.paradox-stats { display: flex; flex-direction: column; gap: 18px; }
+.paradox-stat {
+  background: white;
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  border: 1.5px solid;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+  align-items: center;
+}
+.paradox-stat.orange { border-color: var(--orange); }
+.paradox-stat.red { border-color: var(--red); }
+.paradox-stat.warn { border-color: var(--warn); }
+.paradox-stat-big {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1;
+  font-feature-settings: "tnum";
+  letter-spacing: -0.02em;
+}
+.paradox-stat.orange .paradox-stat-big { color: var(--orange); }
+.paradox-stat.red .paradox-stat-big { color: var(--red); }
+.paradox-stat.warn .paradox-stat-big { color: var(--warn); }
+.paradox-stat-body { font-size: 13.5px; color: var(--dark); line-height: 1.4; }
+
+/* ---------- Recommandations ---------- */
+.quick-wins {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+.qw {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-md);
+}
+.qw-num {
+  font-family: var(--font-display);
+  font-size: 56px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 18px;
+  font-feature-settings: "tnum";
+}
+.qw:nth-child(1) .qw-num { color: var(--cyan); }
+.qw:nth-child(2) .qw-num { color: var(--purple); }
+.qw:nth-child(3) .qw-num { color: var(--orange); }
+
+.qw-title {
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--purple);
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+.qw-body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--dark);
+  margin-bottom: 24px;
+}
+.qw-impact {
+  padding: 14px 16px;
+  background: var(--lavender);
+  border-radius: 10px;
+  font-size: 12.5px;
+  color: var(--purple);
+  font-weight: 500;
+  font-style: italic;
+}
+.qw-impact-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  font-weight: 700;
+  font-style: normal;
+  margin-bottom: 4px;
+}
+
+/* ---------- Roadmap ---------- */
+.roadmap {
+  margin-top: 32px;
+  position: relative;
+}
+.roadmap-line {
+  height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--purple-lt), var(--green));
+  position: absolute;
+  top: 32px;
+  left: 8%;
+  right: 8%;
+  z-index: 0;
+}
+.roadmap-dots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  position: relative;
+  z-index: 1;
+  margin-bottom: 32px;
+}
+.roadmap-dot {
+  justify-self: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--cyan);
+  border: 4px solid var(--bg);
+  margin-top: 22px;
+}
+.roadmap-dots > :nth-child(2) .roadmap-dot { background: var(--purple-lt); }
+.roadmap-dots > :nth-child(3) .roadmap-dot { background: var(--green); }
+
+.roadmap-phases {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.phase {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.phase-head {
+  padding: 20px 24px;
+  color: white;
+}
+.phase:nth-child(1) .phase-head { background: var(--cyan); color: var(--dark); }
+.phase:nth-child(2) .phase-head { background: var(--purple-lt); }
+.phase:nth-child(3) .phase-head { background: var(--green); }
+
+.phase-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.phase-period {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+}
+.phase-body { padding: 28px; }
+.phase-subtitle {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--purple);
+  margin-bottom: 18px;
+}
+.phase-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.phase-items li {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--dark);
+  padding-left: 22px;
+  position: relative;
+}
+.phase-items li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.phase:nth-child(1) .phase-items li::before { background: var(--cyan); }
+.phase:nth-child(2) .phase-items li::before { background: var(--purple-lt); }
+.phase:nth-child(3) .phase-items li::before { background: var(--green); }
+
+/* ---------- Récap 4 temps ---------- */
+.recap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 32px;
+}
+.recap-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-line);
+  display: flex;
+  flex-direction: column;
+}
+.recap-num {
+  width: 46px; height: 46px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 20px;
+  font-feature-settings: "tnum";
+}
+.recap-card:nth-child(1) .recap-num { background: var(--cyan); color: var(--dark); }
+.recap-card:nth-child(2) .recap-num { background: var(--blue); }
+.recap-card:nth-child(3) .recap-num { background: var(--purple); }
+.recap-card:nth-child(4) .recap-num { background: var(--orange); }
+
+.recap-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.recap-title { font-weight: 600; font-size: 17px; color: var(--purple); margin-bottom: 14px; line-height: 1.3; }
+.recap-body { font-size: 13.5px; line-height: 1.5; color: var(--gray-txt); margin-top: auto; }
+
+.final-banner {
+  background: linear-gradient(135deg, var(--dark), var(--purple));
+  color: white;
+  padding: 40px 48px;
+  border-radius: var(--radius-lg);
+  margin-top: 48px;
+  font-size: 17px;
+  line-height: 1.55;
+}
+.final-banner strong { color: var(--cyan); font-weight: 600; }
+
+/* ---------- Closing ---------- */
+.closing-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144;
+  font-size: clamp(44px, 5vw, 68px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 40px;
+  max-width: 900px;
+}
+.closing-title em { font-style: italic; color: var(--cyan); }
+
+.closing-sub {
+  color: rgba(255,255,255,0.72);
+  font-size: 18px;
+  font-weight: 300;
+  max-width: 600px;
+  margin-bottom: 60px;
+}
+
+.closing-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  max-width: 720px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+.closing-meta h6 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.closing-meta p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: white;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  padding: 32px 40px;
+  border-top: 1px solid var(--gray-line);
+  background: var(--white);
+}
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-size: 12px;
+  color: var(--gray-txt);
+}
+.footer-brand { font-weight: 700; color: var(--purple); }
+.footer-brand .star { color: var(--cyan); margin-right: 4px; }
+
+/* ---------- Print optimization ---------- */
+@media print {
+  .topnav, .progress-bar { display: none; }
+  .section { page-break-inside: avoid; padding: 40px; }
+  body { background: white; }
+  .section-dark { background: var(--dark) !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .kpis { grid-template-columns: repeat(3, 1fr); }
+  .kpi { border-bottom: 1px solid var(--gray-line); }
+  .kpi:nth-child(3n) { border-right: none; }
+  .dimensions { grid-template-columns: repeat(2, 1fr); }
+  .dim { border-bottom: 1px solid var(--gray-line); }
+  .bassins, .quick-wins, .verbatims, .frictions { grid-template-columns: 1fr; }
+  .personas, .roadmap-phases { grid-template-columns: 1fr; }
+  .recap { grid-template-columns: repeat(2, 1fr); }
+  .season, .paradox, .funnel, .twocol { grid-template-columns: 1fr; gap: 32px; }
+  .signals, .profiles { grid-template-columns: 1fr; }
+  .compos { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .hero, .section { padding: 64px 20px; }
+  .section-dark { padding: 96px 20px; }
+  .topnav { padding: 12px 20px; }
+  .hero-meta, .recap, .compos { grid-template-columns: 1fr 1fr; }
+  .dimensions, .kpis { grid-template-columns: 1fr; }
+  .dest-row { grid-template-columns: 110px 1fr auto; gap: 10px; font-size: 12px; }
+  .typo-row, .budget-bar-row { grid-template-columns: 130px 1fr auto; gap: 10px; }
+  .intent { grid-template-columns: 70px 1fr; }
+  .intent-example { display: none; }
+  .funnel-step-meta { position: static; transform: none; margin-top: 8px; text-align: left; color: inherit; }
+  .funnel-step-meta .val { color: white; }
+  .funnel-step.s2 .funnel-step-meta .val { color: var(--dark); }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <div class="topnav-brand"><span class="star">✦</span> GENIAL · Generative IA Lab</div>
+    <div class="topnav-ctx">Observatoire Carrefour Voyages · J+1</div>
+    <div class="topnav-tag">GENIALYTICA TRAVEL</div>
+  </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <span class="star-deco s1">✦</span>
+  <span class="star-deco s2">✦</span>
+  <span class="star-deco s3">✦</span>
+  <span class="star-deco s4">✦</span>
+  <span class="star-deco s5">✦</span>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">GENIALYTICA TRAVEL · Analyse conversationnelle</div>
+    <h1 class="hero-title">Carrefour Voyages,<br><em>premier baromètre B2C</em><br>d'un moteur IA.</h1>
+    <p class="hero-lede">Le 16 avril 2026, le moteur de recherche IA de Carrefour Voyages a été ouvert au grand public. Voici ce que <strong>6 760 conversations</strong> nous disent, en J+1, du désir de voyage, du parcours utilisateur, et de la friction qu'il reste à lever.</p>
+    <dl class="hero-meta">
+      <div><dt>Période</dt><dd>27 jan → 17 avr 2026</dd></div>
+      <div><dt>Conversations</dt><dd>6 760</dd></div>
+      <div><dt>Messages</dt><dd>22 228</dd></div>
+      <div><dt>Lancement</dt><dd>16 avril 2026</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ==================== SYNTHÈSE / 3 SIGNAUX ==================== -->
+<section class="section section-bg">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">01</span> Synthèse exécutive</div>
+    <h2 class="section-title">Trois signaux majeurs <em>à l'issue du lancement.</em></h2>
+    <p class="section-lede">Un trafic qui confirme la demande. Un parcours qui perd plus qu'il ne convertit. Une attente d'accompagnement qui dépasse la logique de simple moteur.</p>
+
+    <div class="signals">
+      <div class="signal adopt">
+        <span class="signal-label">Adoption</span>
+        <div class="signal-big">1 836</div>
+        <div class="signal-sub">conversations le jour du lancement</div>
+        <p class="signal-body">+ 209 conversations sur la journée en cours. Le moteur de recherche IA a généré un volume d'engagement B2C inédit pour Carrefour Voyages — signal fort d'intérêt utilisateur.</p>
+      </div>
+      <div class="signal friction">
+        <span class="signal-label">Friction</span>
+        <div class="signal-big">72,3 %</div>
+        <div class="signal-sub">des conversations s'arrêtent après 1 message</div>
+        <p class="signal-body">Seulement 37,2 % des conversations aboutissent à une proposition d'offre concrète. L'agent pose 2-3 questions (période, budget, voyageurs) avant de proposer, ce qui perd une part importante des utilisateurs.</p>
+      </div>
+      <div class="signal opp">
+        <span class="signal-label">Opportunité</span>
+        <div class="signal-big">285</div>
+        <div class="signal-sub">requêtes d'inspiration « où partir ? »</div>
+        <p class="signal-body">Les utilisateurs arrivent sans destination précise. Ils veulent être conseillés, inspirés, guidés. Le potentiel de l'agent dépasse le moteur de recherche : il peut devenir un vrai compagnon de voyage.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MÉTHODOLOGIE ==================== -->
+<section class="section section-white">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">02</span> Méthode GENIAL</div>
+    <h2 class="section-title">GENIALYTICA TRAVEL,<br><em>les cinq dimensions.</em></h2>
+    <p class="section-lede">Une méthodologie propriétaire d'analyse conversationnelle pour le secteur tourisme, déclinée en cinq couches d'insights pour passer de la donnée brute aux décisions marketing &amp; produit.</p>
+
+    <div class="dimensions">
+      <div class="dim">
+        <div class="dim-num">01</div>
+        <h4 class="dim-title">Quantitatif &amp; Adoption</h4>
+        <p class="dim-body">Volumes, croissance, engagement, rebond. Cœur GENIALYTICA commun à tous les secteurs.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-num">02</div>
+        <h4 class="dim-title">Observatoire Destinations</h4>
+        <p class="dim-body">Cartographie des pays, régions et villes recherchés. Identification des bassins porteurs et des angles morts.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-num">03</div>
+        <h4 class="dim-title">Typologies de voyage</h4>
+        <p class="dim-body">All-inclusive, circuit, week-end, ski, croisière, plongée… Segmentation des produits attendus.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-num">04</div>
+        <h4 class="dim-title">Personas &amp; Moments de vie</h4>
+        <p class="dim-body">Compositions, saisonnalité, budgets, durées. Construction des profils pour le ciblage marketing.</p>
+      </div>
+      <div class="dim">
+        <div class="dim-num">05</div>
+        <h4 class="dim-title">Funnel &amp; Friction B2C</h4>
+        <p class="dim-body">Taux de complétion, no-results, verbatims de friction. Optimisation du parcours utilisateur.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECTION SOMBRE CHIFFRES ==================== -->
+<section class="section section-dark">
+  <span class="star-deco s1">✦</span>
+  <span class="star-deco s3">✦</span>
+  <span class="star-deco s5">✦</span>
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">03</span> Chiffres clés</div>
+    <h2 class="section-title"><em>Six repères</em><br>essentiels en un coup d'œil.</h2>
+    <p class="section-lede">Les métriques-ancres de l'observatoire. Adoption, volume, engagement, friction : tout ce qui permet de poser le contexte avant de plonger dans le détail.</p>
+  </div>
+</section>
+
+<!-- KPIs -->
+<section class="section section-bg" style="padding-top: 48px;">
+  <div class="section-inner">
+    <div class="kpis">
+      <div class="kpi"><div class="kpi-label">Conversations</div><div class="kpi-value">6 760</div><div class="kpi-sub">sur 81 jours</div></div>
+      <div class="kpi"><div class="kpi-label">Messages totaux</div><div class="kpi-value">22 228</div><div class="kpi-sub">11 114 users / 11 114 agent</div></div>
+      <div class="kpi"><div class="kpi-label">Msgs / conv</div><div class="kpi-value">3,3</div><div class="kpi-sub">médiane 2,0 · max 42</div></div>
+      <div class="kpi"><div class="kpi-label">Jour de lancement</div><div class="kpi-value">1 836</div><div class="kpi-sub">convs le 16/04 · record</div></div>
+      <div class="kpi"><div class="kpi-label">Taux de complétion</div><div class="kpi-value">37,2 %</div><div class="kpi-sub">conversations avec offre</div></div>
+      <div class="kpi"><div class="kpi-label">Taux d'abandon</div><div class="kpi-value">72,3 %</div><div class="kpi-sub">s'arrêtent après 1 msg</div></div>
+    </div>
+
+    <!-- Daily traffic chart -->
+    <div class="traffic-card">
+      <div class="section-eyebrow" style="margin-bottom: 12px;">Trafic quotidien</div>
+      <h3 style="font-family: var(--font-display); font-weight: 400; font-size: 28px; color: var(--purple); letter-spacing: -0.02em; margin-bottom: 24px;">Le lancement du 16 avril : un pic inédit</h3>
+      <div class="traffic-chart" id="trafficChart"></div>
+      <div class="traffic-legend">
+        <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--cyan)"></span> 16/04 — Lancement grand public (1 836)</div>
+        <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--purple)"></span> 17/04 — J+1 (209)</div>
+        <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--purple-lt)"></span> 08/04 — Test interne</div>
+        <div class="traffic-legend-item"><span class="traffic-legend-dot" style="background: var(--gray-line)"></span> Autres jours (tests équipe)</div>
+      </div>
+    </div>
+
+    <!-- Usage profiles -->
+    <div style="margin-top: 48px;">
+      <div class="section-eyebrow" style="margin-bottom: 12px;">Engagement par conversation</div>
+      <h3 style="font-family: var(--font-display); font-weight: 400; font-size: 30px; color: var(--purple); letter-spacing: -0.02em; margin-bottom: 8px;">Trois profils d'usage : <em style="font-style: italic; color: var(--cyan);">découverte, dialogue, exploration</em>.</h3>
+      <div class="profiles">
+        <div class="profile curious">
+          <div class="profile-head">Visiteur curieux · 2 messages</div>
+          <div class="profile-pct">72,3 %</div>
+          <div class="profile-count">4 889 conversations</div>
+          <p class="profile-desc">Pose une seule question, voit la demande de précision de l'agent, repart. <strong>Majoritaire.</strong></p>
+          <div class="profile-example">Ex. — « Djerba », « circuit », « Paris »</div>
+        </div>
+        <div class="profile engaged">
+          <div class="profile-head">Utilisateur engagé · 3 à 9 messages</div>
+          <div class="profile-pct">22,5 %</div>
+          <div class="profile-count">1 523 conversations</div>
+          <p class="profile-desc">Dialogue productif : partage période, budget, destination, obtient des propositions concrètes.</p>
+          <div class="profile-example">Ex. — Échange structuré autour d'un projet précis</div>
+        </div>
+        <div class="profile power">
+          <div class="profile-head">Power user · 10+ messages</div>
+          <div class="profile-pct">5,1 %</div>
+          <div class="profile-count">348 conversations</div>
+          <p class="profile-desc">Affine, compare, demande des alternatives. Comportement d'exploration et de ré-itération fort.</p>
+          <div class="profile-example">Ex. — « Comparez Marrakech et Istanbul », affinage destination → hôtel → budget</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECTION OBSERVATOIRE ==================== -->
+<section class="section section-dark">
+  <span class="star-deco s2">✦</span>
+  <span class="star-deco s4">✦</span>
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">04</span> Observatoire touristique</div>
+    <h2 class="section-title">Ce que les Français<br><em>cherchent vraiment.</em></h2>
+    <p class="section-lede">Destinations, typologies, saisonnalité, budgets. Une cartographie vivante de la demande B2C, reconstituée à partir des messages libres des utilisateurs — sans filtre, sans catalogue, sans biais d'inventaire.</p>
+  </div>
+</section>
+
+<!-- Top 15 destinations -->
+<section class="section section-white">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">4.1</span> Destinations</div>
+    <h2 class="section-title">Top 15 des destinations <em>recherchées.</em></h2>
+    <p class="section-lede">En % des conversations uniques — une même conversation peut mentionner plusieurs destinations. Couleurs par bassin géographique.</p>
+
+    <div class="dest-table" id="destTable"></div>
+
+    <div class="region-legend">
+      <div class="region-legend-item"><span class="region-dot" style="background: var(--blue)"></span>France</div>
+      <div class="region-legend-item"><span class="region-dot" style="background: var(--cyan)"></span>Europe méditerranéenne</div>
+      <div class="region-legend-item"><span class="region-dot" style="background: var(--orange)"></span>Afrique du Nord</div>
+      <div class="region-legend-item"><span class="region-dot" style="background: var(--purple-lt)"></span>Asie / Océan Indien</div>
+      <div class="region-legend-item"><span class="region-dot" style="background: var(--red)"></span>Amériques</div>
+      <div class="region-legend-item"><span class="region-dot" style="background: var(--green)"></span>Îles / DOM</div>
+    </div>
+
+    <div style="margin-top: 24px; padding: 18px 22px; background: var(--lavender); border-radius: 10px; font-size: 14px; color: var(--purple);">
+      <strong>Lecture marketing :</strong> domination du bassin méditerranéen &amp; Afrique du Nord (53 % des mentions top 8) · France = « fallback » fréquent quand l'utilisateur hésite.
+    </div>
+  </div>
+</section>
+
+<!-- Bassins -->
+<section class="section section-bg">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">4.2</span> Bassins géographiques</div>
+    <h2 class="section-title">Trois grandes aires <em>d'intérêt pour l'audience B2C.</em></h2>
+
+    <div class="bassins">
+      <div class="bassin soleil">
+        <div class="bassin-head">☀️ Soleil proche (Méditerranée élargie)</div>
+        <div class="bassin-body">
+          <div class="bassin-big">2 469</div>
+          <div class="bassin-meta">conversations · 56 % du trafic tourisme</div>
+          <div class="bassin-top">Top 3 destinations</div>
+          <ul class="bassin-list">
+            <li><span class="rank">1. Espagne</span><span class="val">613</span></li>
+            <li><span class="rank">2. Italie</span><span class="val">453</span></li>
+            <li><span class="rank">3. Tunisie</span><span class="val">431</span></li>
+          </ul>
+          <div class="bassin-note">Cœur du marché B2C tourisme. Attentes : all-inclusive, balnéaire, famille, budget maîtrisé.</div>
+        </div>
+      </div>
+      <div class="bassin europe">
+        <div class="bassin-head">🏰 Hexagone &amp; Europe continentale</div>
+        <div class="bassin-body">
+          <div class="bassin-big">1 347</div>
+          <div class="bassin-meta">conversations · 31 % du trafic tourisme</div>
+          <div class="bassin-top">Top 3 destinations</div>
+          <ul class="bassin-list">
+            <li><span class="rank">1. France</span><span class="val">1 199</span></li>
+            <li><span class="rank">2. Royaume-Uni</span><span class="val">38</span></li>
+            <li><span class="rank">3. Scandinavie / Nord</span><span class="val">35</span></li>
+          </ul>
+          <div class="bassin-note">Week-ends, city-trips, inspiration nationale. Court terme, budget serré, famille.</div>
+        </div>
+      </div>
+      <div class="bassin long">
+        <div class="bassin-head">✈️ Long-courrier &amp; rêve</div>
+        <div class="bassin-body">
+          <div class="bassin-big">566</div>
+          <div class="bassin-meta">conversations · 13 % du trafic tourisme</div>
+          <div class="bassin-top">Top 3 destinations</div>
+          <ul class="bassin-list">
+            <li><span class="rank">1. Maldives</span><span class="val">138</span></li>
+            <li><span class="rank">2. Japon</span><span class="val">103</span></li>
+            <li><span class="rank">3. Antilles / Guadeloupe</span><span class="val">70</span></li>
+          </ul>
+          <div class="bassin-note">Projet de vie, voyage de noces, rêve familial. Budget plus élevé, exigences service.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 24px; padding: 18px 22px; background: white; border: 1px solid var(--gray-line); border-radius: 10px; font-size: 14px; color: var(--purple);">
+      <strong>Angle observatoire :</strong> le mix « Soleil proche + Hexagone » couvre plus de 70 % du trafic · le long-courrier existe mais reste une niche à forte valeur (budgets > 3 000 €).
+    </div>
+  </div>
+</section>
+
+<!-- Typologies + Compositions -->
+<section class="section section-white">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">4.3</span> Typologies de voyage</div>
+    <h2 class="section-title">All-inclusive en tête,<br><em>week-ends et balnéaire en dauphins.</em></h2>
+
+    <div class="typos" id="typos"></div>
+
+    <div style="margin-top: 28px; padding: 18px 22px; background: var(--lavender); border-radius: 10px; font-size: 14px; color: var(--purple); line-height: 1.55;">
+      <strong>Lecture tourisme :</strong> le duo <strong>All-Inclusive + Week-end</strong> représente 32 % des typologies exprimées. Le Spa/bien-être (186) et le Parc d'attractions (86) signalent des poches de demande transverses à activer via recommandations automatiques.
+    </div>
+
+    <div style="margin-top: 72px;">
+      <div class="section-eyebrow"><span class="num">4.4</span> Compositions de voyage</div>
+      <h2 class="section-title">La famille domine,<br><em>le couple est un marché premium.</em></h2>
+
+      <div class="compos">
+        <div class="compo">
+          <div class="compo-head">
+            <div class="compo-icon" style="background: rgba(234, 88, 12, 0.15); color: var(--orange);">👨‍👩‍👧</div>
+            <div><div class="compo-name">Famille avec enfants</div><div class="compo-sub">740 convs</div></div>
+          </div>
+          <div class="compo-pct" style="color: var(--orange);">49 %</div>
+        </div>
+        <div class="compo">
+          <div class="compo-head">
+            <div class="compo-icon" style="background: rgba(167, 139, 250, 0.2); color: var(--purple-lt);">💑</div>
+            <div><div class="compo-name">Couple (2 personnes)</div><div class="compo-sub">468 convs</div></div>
+          </div>
+          <div class="compo-pct" style="color: var(--purple-lt);">31 %</div>
+        </div>
+        <div class="compo">
+          <div class="compo-head">
+            <div class="compo-icon" style="background: rgba(37, 99, 235, 0.15); color: var(--blue);">👥</div>
+            <div><div class="compo-name">Groupe (3-5 pers.)</div><div class="compo-sub">275 convs</div></div>
+          </div>
+          <div class="compo-pct" style="color: var(--blue);">18 %</div>
+        </div>
+        <div class="compo">
+          <div class="compo-head">
+            <div class="compo-icon" style="background: rgba(27, 207, 255, 0.2); color: #0891b2;">🚶</div>
+            <div><div class="compo-name">Solo</div><div class="compo-sub">20 convs</div></div>
+          </div>
+          <div class="compo-pct" style="color: #0891b2;">1 %</div>
+        </div>
+        <div class="compo">
+          <div class="compo-head">
+            <div class="compo-icon" style="background: rgba(22, 163, 74, 0.15); color: var(--green);">👨‍👩‍👧‍👦</div>
+            <div><div class="compo-name">Grand groupe (6+)</div><div class="compo-sub">5 convs</div></div>
+          </div>
+          <div class="compo-pct" style="color: var(--green);">&lt; 1 %</div>
+        </div>
+        <div class="compo">
+          <div class="compo-head">
+            <div class="compo-icon" style="background: rgba(27, 207, 255, 0.2); color: #0891b2;">👵</div>
+            <div><div class="compo-name">Séniors / Retraités</div><div class="compo-sub">2 convs</div></div>
+          </div>
+          <div class="compo-pct" style="color: #0891b2;">&lt; 1 %</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 28px; padding: 18px 22px; background: var(--lavender); border-radius: 10px; font-size: 14px; color: var(--purple); line-height: 1.55;">
+        <strong>Lecture marketing :</strong> la famille avec enfants représente 47 % des compositions exprimées — cohérent avec le positionnement Carrefour. <strong>Le couple (30 %)</strong> reste sous-exploité en communication : produits haut de gamme, voyage de noces, spa — potentiel panier moyen +50 %.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Saisonnalité + Budgets -->
+<section class="section section-bg">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">4.5</span> Saisonnalité des recherches</div>
+    <h2 class="section-title">Un fort biais estival,<br><em>trois fenêtres d'opportunité.</em></h2>
+
+    <div class="season">
+      <div class="season-chart-card">
+        <div class="season-chart" id="seasonChart"></div>
+        <div class="season-labels">
+          <div class="season-label">Jan</div><div class="season-label">Fév</div><div class="season-label">Mar</div>
+          <div class="season-label">Avr</div><div class="season-label">Mai</div><div class="season-label">Juin</div>
+          <div class="season-label">Juil</div><div class="season-label">Août</div><div class="season-label">Sept</div>
+          <div class="season-label">Oct</div><div class="season-label">Nov</div><div class="season-label">Déc</div>
+        </div>
+      </div>
+      <div class="windows">
+        <div class="window-title">Trois fenêtres d'opportunité</div>
+        <div class="window-card">
+          <div class="window-name">☀️ Pic estival</div>
+          <div class="window-period">Juin-Août · 1 153 convs</div>
+          <div class="window-body">58 % du volume. Pics de réservation 3-4 mois avant.</div>
+        </div>
+        <div class="window-card">
+          <div class="window-name">🌸 Printemps &amp; Pâques</div>
+          <div class="window-period">Mars-Mai · 477 convs</div>
+          <div class="window-body">Fenêtre sous-exploitée : court séjour, city-trip, week-end prolongé.</div>
+        </div>
+        <div class="window-card">
+          <div class="window-name">🍂 Automne-Toussaint</div>
+          <div class="window-period">Sept-Nov · 467 convs</div>
+          <div class="window-body">Tropiques, soleil d'hiver, hors vacances scolaires.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px; padding: 18px 22px; background: white; border: 1px solid var(--gray-line); border-radius: 10px; font-size: 14px; color: var(--purple); line-height: 1.55;">
+      <strong>Saisonnalité &amp; anticipation :</strong> les utilisateurs se projettent en moyenne <strong>2 à 4 mois en avance</strong> (recherche en avril → départ en juin-août). L'agent peut devenir un outil de réservation anticipée : relances, wishlist, tarifs early-bird.
+    </div>
+
+    <!-- Budgets -->
+    <div style="margin-top: 72px;">
+      <div class="section-eyebrow"><span class="num">4.6</span> Budgets &amp; durées</div>
+      <h2 class="section-title">Cœur de cible <em>budget-conscient,</em><br>avec une frange haut de gamme.</h2>
+
+      <div class="twocol">
+        <div>
+          <div class="budget-head">Répartition des budgets exprimés</div>
+          <div class="budget-head-sub">Budget médian : 700 € · moyen : 1 185 € · n = 1 100</div>
+
+          <div class="budget-bar-row"><div class="budget-bar-name">Petit budget (&lt; 500 €)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--red); width: 100%;"></div></div><div class="budget-val">481 (44 %)</div></div>
+          <div class="budget-bar-row"><div class="budget-bar-name">Moyen (500-1500 €)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--orange); width: 76%;"></div></div><div class="budget-val">367 (33 %)</div></div>
+          <div class="budget-bar-row"><div class="budget-bar-name">Confort (1500-3000 €)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--cyan); width: 26%;"></div></div><div class="budget-val">127 (12 %)</div></div>
+          <div class="budget-bar-row"><div class="budget-bar-name">Haut de gamme (3-5k €)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--purple-lt); width: 18%;"></div></div><div class="budget-val">86 (8 %)</div></div>
+          <div class="budget-bar-row"><div class="budget-bar-name">Luxe (5000 €+)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--purple); width: 8%;"></div></div><div class="budget-val">39 (4 %)</div></div>
+        </div>
+        <div>
+          <div class="budget-head">Durées de séjour demandées</div>
+          <div class="budget-head-sub">Distribution observée dans les messages utilisateurs</div>
+
+          <div class="budget-bar-row"><div class="budget-bar-name">Week-end (1-3 nuits)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--blue); width: 23%;"></div></div><div class="budget-val">80 (13 %)</div></div>
+          <div class="budget-bar-row"><div class="budget-bar-name">Court séjour (4-5 nuits)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--cyan); width: 19%;"></div></div><div class="budget-val">67 (11 %)</div></div>
+          <div class="budget-bar-row"><div class="budget-bar-name">Semaine (6-8 nuits)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--orange); width: 100%;"></div></div><div class="budget-val">345 (58 %)</div></div>
+          <div class="budget-bar-row"><div class="budget-bar-name">10-14 nuits</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--purple-lt); width: 30%;"></div></div><div class="budget-val">103 (17 %)</div></div>
+          <div class="budget-bar-row"><div class="budget-bar-name">Long séjour (15+ nuits)</div><div class="budget-bar-wrap"><div class="budget-bar" style="background: var(--purple); width: 3%;"></div></div><div class="budget-val">4 (1 %)</div></div>
+        </div>
+      </div>
+
+      <div style="margin-top: 28px; padding: 18px 22px; background: var(--lavender); border-radius: 10px; font-size: 14px; color: var(--purple); line-height: 1.55;">
+        <strong>Lecture pricing :</strong> 59 % des budgets exprimés sont sous 1 500 € — audience budget-conscient. Mais <strong>15 % à 3 000+ €</strong> = poche à forte valeur à adresser différemment. Dominante « 1 semaine » (55 %) en phase avec le produit principal.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECTION PERSONAS ==================== -->
+<section class="section section-dark">
+  <span class="star-deco s1">✦</span>
+  <span class="star-deco s5">✦</span>
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">05</span> Personas touristiques</div>
+    <h2 class="section-title">Quatre profils<br><em>dérivés des conversations réelles.</em></h2>
+    <p class="section-lede">Pas de supposition, pas d'ateliers de persona abstraits : ces quatre profils émergent directement des comportements observés dans les 6 760 conversations, avec leurs mots, leurs moments, leurs attentes.</p>
+  </div>
+</section>
+
+<section class="section section-bg" style="padding-top: 48px;">
+  <div class="section-inner">
+    <div class="personas">
+      <div class="persona famille">
+        <div class="persona-head">
+          <div class="persona-head-left"><span class="persona-emoji">☀️</span><span class="persona-name">Sophie &amp; Julien, Famille Soleil</span></div>
+          <span class="persona-share">~40 %</span>
+        </div>
+        <div class="persona-body">
+          <div class="persona-col">
+            <h5>Profil</h5>
+            <p>35-48 ans, 2-3 enfants, budget 1 500-2 500 €.</p>
+            <h5>Attentes</h5>
+            <p>All-inclusive bord de mer, vols directs, kids club.</p>
+          </div>
+          <div class="persona-col">
+            <h5>Destinations types</h5>
+            <p>Tunisie, Espagne, Maroc, Grèce.</p>
+            <h5>Saisonnalité</h5>
+            <p>Juillet-août (vacances scolaires).</p>
+          </div>
+          <div class="persona-verbatim">Où partir cet été avec mes enfants ?</div>
+        </div>
+      </div>
+
+      <div class="persona couple">
+        <div class="persona-head">
+          <div class="persona-head-left"><span class="persona-emoji">🥂</span><span class="persona-name">Claire &amp; Marc, Couple Escapade</span></div>
+          <span class="persona-share">~25 %</span>
+        </div>
+        <div class="persona-body">
+          <div class="persona-col">
+            <h5>Profil</h5>
+            <p>30-55 ans, DINKs ou enfants autonomes, budget 1 000-3 000 €.</p>
+            <h5>Attentes</h5>
+            <p>Week-end premium, city-trip, spa, gastronomie.</p>
+          </div>
+          <div class="persona-col">
+            <h5>Destinations types</h5>
+            <p>Italie, Portugal, Chypre, Croatie, Maldives.</p>
+            <h5>Saisonnalité</h5>
+            <p>Printemps + automne (hors vacances scolaires).</p>
+          </div>
+          <div class="persona-verbatim">Week-end romantique à Venise, 3 nuits</div>
+        </div>
+      </div>
+
+      <div class="persona leseeker">
+        <div class="persona-head">
+          <div class="persona-head-left"><span class="persona-emoji">🧭</span><span class="persona-name">Léa, Inspiration-Seeker</span></div>
+          <span class="persona-share">~20 %</span>
+        </div>
+        <div class="persona-body">
+          <div class="persona-col">
+            <h5>Profil</h5>
+            <p>Indéfini, arrive sans idée, veut être conseillée.</p>
+            <h5>Attentes</h5>
+            <p>Recommandations, comparaisons, storytelling.</p>
+          </div>
+          <div class="persona-col">
+            <h5>Destinations types</h5>
+            <p>Ouverte — réceptive aux suggestions.</p>
+            <h5>Saisonnalité</h5>
+            <p>Variable (souvent été ou vacances).</p>
+          </div>
+          <div class="persona-verbatim">Je ne sais pas, tu me conseilles quoi ?</div>
+        </div>
+      </div>
+
+      <div class="persona thomas">
+        <div class="persona-head">
+          <div class="persona-head-left"><span class="persona-emoji">🎯</span><span class="persona-name">Thomas, Voyageur Précis</span></div>
+          <span class="persona-share">~15 %</span>
+        </div>
+        <div class="persona-body">
+          <div class="persona-col">
+            <h5>Profil</h5>
+            <p>Sait ce qu'il veut : destination + hôtel + dates.</p>
+            <h5>Attentes</h5>
+            <p>Réservation directe, comparaison rapide de prix.</p>
+          </div>
+          <div class="persona-col">
+            <h5>Destinations types</h5>
+            <p>Destination précise (souvent hôtel nommé).</p>
+            <h5>Saisonnalité</h5>
+            <p>Précise (dates arrêtées).</p>
+          </div>
+          <div class="persona-verbatim">Hôtel R2 Pájara Beach Fuerteventura 4*</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Intents -->
+<section class="section section-white">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">5.1</span> Intentions détectées</div>
+    <h2 class="section-title">De la recherche précise<br><em>à l'inspiration pure.</em></h2>
+
+    <div class="intents">
+      <div class="intent precise">
+        <div class="intent-pct">~65 %</div>
+        <div>
+          <div class="intent-title">Recherche précise (destination nommée)</div>
+          <div class="intent-desc">Le user arrive avec un pays, une ville ou un hôtel identifié.</div>
+        </div>
+        <div class="intent-example">Ex : « Djerba », « Fuerteventura 4* »</div>
+      </div>
+      <div class="intent inspire">
+        <div class="intent-pct">~20 %</div>
+        <div>
+          <div class="intent-title">Inspiration ouverte</div>
+          <div class="intent-desc">« Où partir ? » sans idée préalable. Attend du conseil.</div>
+        </div>
+        <div class="intent-example">Ex : « Où partir cet été ? » · 157 occurrences</div>
+      </div>
+      <div class="intent compare">
+        <div class="intent-pct">~10 %</div>
+        <div>
+          <div class="intent-title">Comparaison multi-options</div>
+          <div class="intent-desc">Arbitre entre 2+ destinations ou hôtels.</div>
+        </div>
+        <div class="intent-example">Ex : « Compare Marrakech et Istanbul » · 253 signaux</div>
+      </div>
+      <div class="intent practical">
+        <div class="intent-pct">~5 %</div>
+        <div>
+          <div class="intent-title">Question pratique / service</div>
+          <div class="intent-desc">Formalités, vols, météo, horaires, proximité.</div>
+        </div>
+        <div class="intent-example">Ex : « vol direct Marseille » · 189 signaux</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px; padding: 20px 24px; background: var(--lavender); border-radius: 12px; font-size: 14.5px; color: var(--purple); line-height: 1.55;">
+      <strong>Lecture stratégique :</strong> les 20 % d'intentions « inspiration ouverte » sont sous-servies aujourd'hui (réponse standard « quelle période / budget ? »). <strong>Nouvelle opportunité :</strong> carrousel de suggestions visuelles générées sur prompt libre.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FUNNEL ==================== -->
+<section class="section section-dark">
+  <span class="star-deco s2">✦</span>
+  <span class="star-deco s3">✦</span>
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">06</span> Funnel &amp; friction</div>
+    <h2 class="section-title">Où les utilisateurs<br><em>décrochent-ils ?</em></h2>
+    <p class="section-lede">Entre le premier contact et l'interaction post-offre, le moteur perd deux utilisateurs sur trois. Comprendre où — et surtout pourquoi — est le levier #1 du prochain trimestre.</p>
+  </div>
+</section>
+
+<section class="section section-bg" style="padding-top: 48px;">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">6.1</span> Funnel de conversion</div>
+    <h2 class="section-title">Un parcours qui perd <strong>63 %</strong> <em>des utilisateurs avant l'offre.</em></h2>
+
+    <div class="funnel">
+      <div class="funnel-bars">
+        <div class="funnel-step s1">
+          <div class="funnel-step-name">1. Premier contact</div>
+          <div class="funnel-step-desc">User tape une destination ou une question ouverte</div>
+          <div class="funnel-step-meta"><div class="val">6 760</div><div class="pct">100 %</div></div>
+        </div>
+        <div class="funnel-step s2">
+          <div class="funnel-step-name">2. Offre concrète présentée</div>
+          <div class="funnel-step-desc">Agent propose 1+ destination avec prix et dates</div>
+          <div class="funnel-step-meta"><div class="val">2 514</div><div class="pct">37 %</div></div>
+        </div>
+        <div class="funnel-step s3">
+          <div class="funnel-step-name">3. Interaction post-offre</div>
+          <div class="funnel-step-desc">User affine, compare, relance (5+ msgs)</div>
+          <div class="funnel-step-meta"><div class="val">1 005</div><div class="pct">15 %</div></div>
+        </div>
+      </div>
+      <div class="drops">
+        <div class="drop red">
+          <div class="drop-big">-63 %</div>
+          <div class="drop-sub">entre étape 1 → 2</div>
+          <div class="drop-body">2 utilisateurs sur 3 n'atteignent jamais l'offre concrète. Cause dominante : la séquence de questions préalable.</div>
+        </div>
+        <div class="drop warn">
+          <div class="drop-big">-22 %</div>
+          <div class="drop-sub">entre étape 2 → 3</div>
+          <div class="drop-body">Parmi ceux qui voient l'offre, 60 % ne relancent pas. Manque de call-to-action ou d'alternative proposée.</div>
+        </div>
+        <div class="drop green">
+          <div class="drop-big">Signal</div>
+          <div class="drop-sub">levier prioritaire</div>
+          <div class="drop-body">Raccourcir la distance entre contact et offre = +15 pts d'engagement attendus.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paradoxe -->
+    <div style="margin-top: 72px;">
+      <div class="section-eyebrow"><span class="num">6.2</span> Friction n°1</div>
+      <h2 class="section-title">Le paradoxe :<br><em>l'agent demande plus qu'il ne propose.</em></h2>
+
+      <div class="paradox">
+        <div class="dialogue">
+          <div class="msg user"><div class="msg-label">User</div>« Djerba »</div>
+          <div class="arrow-down">↓</div>
+          <div class="msg agent"><div class="msg-label">Agent</div>« Pour quelle période souhaitez-vous partir à Djerba, et quel est votre budget approximatif ? »</div>
+          <div class="arrow-down">↓ &nbsp; <span style="color: var(--red); font-style: italic; font-weight: 500;">72 % abandonnent ici</span></div>
+          <div class="msg silence"><div class="msg-label" style="color: var(--gray-txt);">User</div>(silence / fermeture de l'onglet)</div>
+        </div>
+        <div class="paradox-stats">
+          <div class="paradox-stat orange">
+            <div class="paradox-stat-big">81,7 %</div>
+            <div class="paradox-stat-body">des messages agent demandent <strong>période / budget / voyageurs</strong> avant toute proposition.</div>
+          </div>
+          <div class="paradox-stat red">
+            <div class="paradox-stat-big">72,3 %</div>
+            <div class="paradox-stat-body">des conversations s'arrêtent <strong>après le 1er message user</strong>.</div>
+          </div>
+          <div class="paradox-stat warn">
+            <div class="paradox-stat-big">37,2 %</div>
+            <div class="paradox-stat-body">seulement des conversations voient une <strong>offre concrète</strong>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 32px; padding: 20px 24px; background: white; border: 1px solid var(--gray-line); border-radius: 12px; font-size: 15px; color: var(--purple); line-height: 1.55;">
+        <strong>La clarification avant proposition</strong> est un réflexe conversationnel qui fonctionne mal en B2C : l'utilisateur attend une <strong>pré-proposition qu'il affine ensuite</strong>. Pattern à inverser.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Verbatims -->
+<section class="section section-white">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">6.3</span> Verbatims réels</div>
+    <h2 class="section-title">La demande d'inspiration<br><em>en mots d'utilisateurs.</em></h2>
+    <p class="section-lede">Extraits anonymisés de conversations — avril 2026. Douze requêtes qui racontent, mieux que des pourcentages, ce que les utilisateurs attendent réellement d'un moteur IA voyage.</p>
+
+    <div class="verbatims">
+      <div class="verbatim"><div class="verbatim-quote">Où partir cet été avec mes enfants ?</div><div class="verbatim-tag">Famille Soleil</div></div>
+      <div class="verbatim"><div class="verbatim-quote">Où partir au soleil en octobre ?</div><div class="verbatim-tag">Chercheur d'ailleurs</div></div>
+      <div class="verbatim"><div class="verbatim-quote">tu conseilles lequel ?</div><div class="verbatim-tag">Indécis</div></div>
+      <div class="verbatim"><div class="verbatim-quote">Où partir au soleil sans passeport ?</div><div class="verbatim-tag">Voyageur pragmatique</div></div>
+      <div class="verbatim"><div class="verbatim-quote">hum je sais pas tu me conseille quoi ?</div><div class="verbatim-tag">Inspiration-Seeker</div></div>
+      <div class="verbatim"><div class="verbatim-quote">justement je vous ai dit je n'ai pas d'idée</div><div class="verbatim-tag">Frustré</div></div>
+      <div class="verbatim"><div class="verbatim-quote">Où partir en famille au soleil en février ?</div><div class="verbatim-tag">Famille Soleil hiver</div></div>
+      <div class="verbatim"><div class="verbatim-quote">Aucune idée</div><div class="verbatim-tag">Terrain vierge</div></div>
+      <div class="verbatim"><div class="verbatim-quote">L'Indonésie est une bonne idée</div><div class="verbatim-tag">Réceptif aux suggestions</div></div>
+      <div class="verbatim"><div class="verbatim-quote">Comparez-moi les prix entre Marrakech et Istanbul pour une semaine en juillet</div><div class="verbatim-tag">Comparateur</div></div>
+      <div class="verbatim"><div class="verbatim-quote">Je cherche un séjour plongée aux Maldives en octobre pour 10 jours</div><div class="verbatim-tag">Niche précise</div></div>
+      <div class="verbatim"><div class="verbatim-quote">bonne idée l'Andalousie</div><div class="verbatim-tag">Converti par l'agent</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 Frictions -->
+<section class="section section-bg">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">6.4</span> Points de friction identifiés</div>
+    <h2 class="section-title">Six irritants <em>à travailler en priorité.</em></h2>
+
+    <div class="frictions">
+      <div class="friction">
+        <div class="friction-head">
+          <div class="friction-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--warn);">❓</div>
+          <div class="friction-title">Trop de questions en amont</div>
+        </div>
+        <div class="friction-body">81,7 % des messages agent demandent période, budget, voyageurs — avant toute proposition.</div>
+      </div>
+      <div class="friction">
+        <div class="friction-head">
+          <div class="friction-icon" style="background: rgba(220, 38, 38, 0.12); color: var(--red);">🚪</div>
+          <div class="friction-title">Taux d'abandon immédiat</div>
+        </div>
+        <div class="friction-body">72,3 % des conversations s'arrêtent après la 1ère saisie du user.</div>
+      </div>
+      <div class="friction">
+        <div class="friction-head">
+          <div class="friction-icon" style="background: rgba(234, 88, 12, 0.15); color: var(--orange);">💸</div>
+          <div class="friction-title">Budgets irréalistes non éduqués</div>
+        </div>
+        <div class="friction-body">Mentions « 100 € pour 2 », « 200 € 1 semaine » non reformulées en éducation prix.</div>
+      </div>
+      <div class="friction">
+        <div class="friction-head">
+          <div class="friction-icon" style="background: rgba(220, 38, 38, 0.12); color: var(--red);">🏝️</div>
+          <div class="friction-title">No-results sur destinations précises</div>
+        </div>
+        <div class="friction-body">473 messages « aucun hôtel trouvé » — catalogue ou reformulation à enrichir.</div>
+      </div>
+      <div class="friction">
+        <div class="friction-head">
+          <div class="friction-icon" style="background: rgba(167, 139, 250, 0.2); color: var(--purple-lt);">🧭</div>
+          <div class="friction-title">Inspiration ouverte mal servie</div>
+        </div>
+        <div class="friction-body">285 requêtes « où partir ? » traitées par la même question standard, au lieu de suggérer.</div>
+      </div>
+      <div class="friction">
+        <div class="friction-head">
+          <div class="friction-icon" style="background: rgba(234, 88, 12, 0.15); color: var(--orange);">🔁</div>
+          <div class="friction-title">Reformulations forcées</div>
+        </div>
+        <div class="friction-body">User doit réexpliquer plusieurs fois quand l'agent retombe sur la même clarification.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RECOMMANDATIONS ==================== -->
+<section class="section section-dark">
+  <span class="star-deco s1">✦</span>
+  <span class="star-deco s4">✦</span>
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">07</span> Recommandations</div>
+    <h2 class="section-title">De l'observation<br><em>à la décision produit &amp; marketing.</em></h2>
+    <p class="section-lede">Trois quick-wins déployables en deux semaines. Trois chantiers stratégiques sur trois à six mois. Une roadmap qui transforme l'agent en observatoire vivant du marché voyage.</p>
+  </div>
+</section>
+
+<section class="section section-bg" style="padding-top: 48px;">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">7.1</span> Priorité 1 · À déployer en 2 semaines</div>
+    <h2 class="section-title">Trois quick-wins <em>pour réduire l'abandon de 30 à 40 %.</em></h2>
+
+    <div class="quick-wins">
+      <div class="qw">
+        <div class="qw-num">01</div>
+        <h3 class="qw-title">Proposer avant d'interroger</h3>
+        <p class="qw-body">Quand le user saisit juste une destination (ex. « Djerba »), afficher immédiatement 2-3 offres types (semaine, août, 4★), puis affiner.</p>
+        <div class="qw-impact"><span class="qw-impact-label">Impact attendu</span>Réduction estimée de l'abandon 1-msg : -25 à -35 pts</div>
+      </div>
+      <div class="qw">
+        <div class="qw-num">02</div>
+        <h3 class="qw-title">Mode « inspiration » activé sur requêtes ouvertes</h3>
+        <p class="qw-body">Détecter les patterns « où partir », « tu conseilles », « pas d'idée » et basculer sur un carrousel de 4-6 suggestions personnalisées (saison + famille + budget).</p>
+        <div class="qw-impact"><span class="qw-impact-label">Impact attendu</span>Activation des 285 requêtes inspiration + contenus déjà existants</div>
+      </div>
+      <div class="qw">
+        <div class="qw-num">03</div>
+        <h3 class="qw-title">Éducation prix intelligente sur petits budgets</h3>
+        <p class="qw-body">Pour les demandes sous 300 €/pers., proposer une fourchette réaliste + 2 options « petits prix » (court séjour, basse saison) plutôt qu'un refus sec.</p>
+        <div class="qw-impact"><span class="qw-impact-label">Impact attendu</span>Re-capture de 473 « no-result » potentiellement transformables</div>
+      </div>
+    </div>
+
+    <!-- P2 chantiers -->
+    <div style="margin-top: 72px;">
+      <div class="section-eyebrow"><span class="num">7.2</span> Priorité 2 · Engagement profond</div>
+      <h2 class="section-title">Trois chantiers stratégiques <em>sur 3-6 mois.</em></h2>
+
+      <div class="quick-wins">
+        <div class="qw">
+          <div class="qw-num">01</div>
+          <h3 class="qw-title">Un observatoire touristique en temps réel</h3>
+          <p class="qw-body">Transformer les conversations en dashboard marketing hebdomadaire : destinations montantes, saisons anticipées, typologies émergentes, paniers.</p>
+          <div class="qw-impact"><span class="qw-impact-label">Bénéfice</span>Pour les équipes marketing &amp; achats : arbitrer campagnes et sourcing selon la demande réelle (et non les catalogues précédents).</div>
+        </div>
+        <div class="qw">
+          <div class="qw-num">02</div>
+          <h3 class="qw-title">Personnalisation par persona</h3>
+          <p class="qw-body">Détecter dynamiquement le persona (famille / couple / inspiration / précis) et adapter la tournure de l'agent : tonalité, ordre des questions, profondeur du conseil.</p>
+          <div class="qw-impact"><span class="qw-impact-label">Bénéfice</span>Agent perçu comme un conseiller humain, pas un moteur — levier direct sur NPS et panier moyen.</div>
+        </div>
+        <div class="qw">
+          <div class="qw-num">03</div>
+          <h3 class="qw-title">Carnet de voyage IA &amp; ré-engagement</h3>
+          <p class="qw-body">Permettre au user de sauvegarder ses conversations, recevoir une relance ciblée (mail/app) sur les dates visées, et accéder à un tableau de bord personnel.</p>
+          <div class="qw-impact"><span class="qw-impact-label">Bénéfice</span>Passage du one-shot au cycle de vie : jusqu'à +40 % de ré-engagement sur les projets longs (noces, vac. été).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div style="margin-top: 72px;">
+      <div class="section-eyebrow"><span class="num">7.3</span> Roadmap opérationnelle</div>
+      <h2 class="section-title">Trois phases pour passer<br><em>du lancement à l'observatoire.</em></h2>
+
+      <div class="roadmap">
+        <div class="roadmap-line"></div>
+        <div class="roadmap-dots">
+          <div><div class="roadmap-dot"></div></div>
+          <div><div class="roadmap-dot"></div></div>
+          <div><div class="roadmap-dot"></div></div>
+        </div>
+        <div class="roadmap-phases">
+          <div class="phase">
+            <div class="phase-head">
+              <div class="phase-title">Phase 1</div>
+              <div class="phase-period">J+0 → J+15</div>
+            </div>
+            <div class="phase-body">
+              <div class="phase-subtitle">Stabilisation &amp; quick-wins</div>
+              <ul class="phase-items">
+                <li>Proposer avant d'interroger</li>
+                <li>Mode inspiration activé</li>
+                <li>Éducation prix intelligente</li>
+                <li>Suivi hebdo des métriques abandon/offre</li>
+              </ul>
+            </div>
+          </div>
+          <div class="phase">
+            <div class="phase-head">
+              <div class="phase-title">Phase 2</div>
+              <div class="phase-period">M+1 → M+3</div>
+            </div>
+            <div class="phase-body">
+              <div class="phase-subtitle">Observatoire &amp; personnalisation</div>
+              <ul class="phase-items">
+                <li>Dashboard observatoire touristique</li>
+                <li>Détection personas automatique</li>
+                <li>Enrichissement catalogue no-results</li>
+                <li>A/B testing des formats d'offre</li>
+              </ul>
+            </div>
+          </div>
+          <div class="phase">
+            <div class="phase-head">
+              <div class="phase-title">Phase 3</div>
+              <div class="phase-period">M+3 → M+6</div>
+            </div>
+            <div class="phase-body">
+              <div class="phase-subtitle">Fidélisation &amp; cycle de vie</div>
+              <ul class="phase-items">
+                <li>Carnet de voyage IA</li>
+                <li>Ré-engagement mail / app</li>
+                <li>Scoring prospects chauds</li>
+                <li>Intégration CRM Carrefour + remarketing</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 32px; padding: 20px 24px; background: var(--lavender); border-radius: 12px; font-size: 15px; color: var(--purple); line-height: 1.55; text-align: center;">
+        <strong>Objectif 6 mois :</strong> passer de 37 % à 60 %+ de conversations avec offre présentée, et générer un observatoire data utile à toute l'entreprise.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RÉCAP ==================== -->
+<section class="section section-white">
+  <div class="section-inner">
+    <div class="section-eyebrow"><span class="num">08</span> Synthèse exécutive</div>
+    <h2 class="section-title">L'essentiel <em>à retenir en quatre temps.</em></h2>
+
+    <div class="recap">
+      <div class="recap-card">
+        <div class="recap-num">01</div>
+        <div class="recap-label">Adoption</div>
+        <h4 class="recap-title">Un trafic massif dès J+1</h4>
+        <p class="recap-body">1 836 conversations le jour du lancement · audience B2C validée.</p>
+      </div>
+      <div class="recap-card">
+        <div class="recap-num">02</div>
+        <div class="recap-label">Observatoire</div>
+        <h4 class="recap-title">Trois bassins géographiques clairs</h4>
+        <p class="recap-body">Méditerranée (dominant) · Hexagone · Long-courrier premium.</p>
+      </div>
+      <div class="recap-card">
+        <div class="recap-num">03</div>
+        <div class="recap-label">Personas</div>
+        <h4 class="recap-title">Quatre profils actionnables</h4>
+        <p class="recap-body">Famille Soleil (40 %) · Couple Escapade (25 %) · Inspiration-Seeker (20 %) · Voyageur Précis (15 %).</p>
+      </div>
+      <div class="recap-card">
+        <div class="recap-num">04</div>
+        <div class="recap-label">Friction</div>
+        <h4 class="recap-title">Un parcours à inverser</h4>
+        <p class="recap-body">72,3 % d'abandon à 1 msg · proposer avant d'interroger.</p>
+      </div>
+    </div>
+
+    <div class="final-banner">
+      Le moteur de recherche IA de Carrefour Voyages <strong>n'est pas un « chatbot »</strong> mais un <strong>compagnon d'inspiration</strong>. L'enjeu n'est plus de « faire marcher » l'agent : c'est d'en faire l'outil marketing &amp; observatoire le plus puissant de l'écosystème voyage Carrefour.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CLOSING ==================== -->
+<section class="section section-dark">
+  <span class="star-deco s1">✦</span>
+  <span class="star-deco s2">✦</span>
+  <span class="star-deco s3">✦</span>
+  <span class="star-deco s4">✦</span>
+  <div class="section-inner">
+    <div class="section-eyebrow">GENIALYTICA TRAVEL</div>
+    <h1 class="closing-title">Transformer chaque conversation<br>en <em>décision marketing.</em></h1>
+    <p class="closing-sub">Merci pour votre confiance. Cette analyse est le premier baromètre B2C d'un moteur IA voyage français — et elle est déjà réplicable sur les prochains comptes tourisme.</p>
+
+    <div class="closing-meta">
+      <div>
+        <h6>Livrable</h6>
+        <p>Observatoire Carrefour Voyages · J+1 post-lancement · analyse conversationnelle GENIALYTICA TRAVEL</p>
+      </div>
+      <div>
+        <h6>Contact GENIAL</h6>
+        <p>wearegenial.com<br>contact@wearegenial.com</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand"><span class="star">✦</span> GENIAL · Generative IA Lab · SAS CIBLER · Bordeaux</div>
+    <div>Observatoire Carrefour Voyages · avril 2026 · v1.0</div>
+  </div>
+</footer>
+
+<script>
+// Progress bar
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const b = document.body;
+  const st = 'scrollTop';
+  const sh = 'scrollHeight';
+  const pct = (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
+  progressBar.style.width = pct + '%';
+});
+
+// ---------- Traffic chart ----------
+// Approximate daily volumes — 81 days from 2026-01-27 to 2026-04-17.
+// Reconstruct a realistic distribution: most days 0-100 convs, 08/04 spike, 16/04 launch spike, 17/04 residual.
+const daily = [];
+// 81 days of baseline noise
+const labels = [];
+const start = new Date('2026-01-27');
+for (let i = 0; i < 81; i++) {
+  const d = new Date(start); d.setDate(d.getDate() + i);
+  labels.push(String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0'));
+  // baseline small noise pattern
+  let v = Math.round(20 + Math.random() * 70);
+  // a few mid-spikes for test days
+  if (i === 25) v = 170; // 21/02
+  if (i === 37) v = 155; // 05/03
+  if (i === 45) v = 135; // 13/03
+  if (i === 57) v = 100; // 25/03
+  if (i === 67) v = 140; // 04/04
+  daily.push(v);
+}
+// Key days
+daily[71] = 2548; // 08/04 test
+daily[79] = 1836; // 16/04 launch (cyan)
+daily[80] = 209;  // 17/04 J+1
+
+const maxV = Math.max(...daily);
+const chart = document.getElementById('trafficChart');
+daily.forEach((v, i) => {
+  const bar = document.createElement('div');
+  bar.className = 'traffic-bar';
+  if (i === 79) { bar.classList.add('launch'); bar.setAttribute('data-label', '16/04'); }
+  else if (i === 80) { bar.classList.add('j1'); bar.setAttribute('data-label', '17/04'); }
+  else if (i === 71) { bar.classList.add('test'); bar.setAttribute('data-label', '08/04'); }
+  bar.style.height = (v / maxV * 100) + '%';
+  chart.appendChild(bar);
+});
+
+// ---------- Destinations table ----------
+const dests = [
+  ['France', 1199, 17.7, 'var(--blue)'],
+  ['Espagne', 613, 9.1, 'var(--cyan)'],
+  ['Italie', 453, 6.7, 'var(--cyan)'],
+  ['Tunisie', 431, 6.4, 'var(--orange)'],
+  ['Maroc', 328, 4.9, 'var(--orange)'],
+  ['Grèce', 217, 3.2, 'var(--cyan)'],
+  ['Turquie', 169, 2.5, 'var(--orange)'],
+  ['Maldives', 138, 2.0, 'var(--purple-lt)'],
+  ['Portugal', 108, 1.6, 'var(--cyan)'],
+  ['Japon', 103, 1.5, 'var(--purple-lt)'],
+  ['Antilles / Guadeloupe', 70, 1.0, 'var(--green)'],
+  ['Croatie', 66, 1.0, 'var(--cyan)'],
+  ['Égypte', 64, 0.9, 'var(--orange)'],
+  ['Bali / Indonésie', 61, 0.9, 'var(--purple-lt)'],
+  ['États-Unis', 45, 0.7, 'var(--red)'],
+];
+const destMax = 1199;
+const destTable = document.getElementById('destTable');
+dests.forEach(([name, val, pct, color]) => {
+  const row = document.createElement('div');
+  row.className = 'dest-row';
+  const w = Math.max(6, val / destMax * 100);
+  row.innerHTML = `
+    <div class="dest-name">${name}</div>
+    <div class="dest-bar-wrap">
+      <div class="dest-bar" style="background: ${color}; width: ${w}%;">${val >= 150 ? val : ''}</div>
+    </div>
+    <div class="dest-pct">${val < 150 ? val + ' · ' : ''}${pct.toFixed(1)} %</div>
+  `;
+  destTable.appendChild(row);
+});
+
+// ---------- Typologies ----------
+const typos = [
+  ['All-Inclusive / Tout inclus', 456, 'var(--cyan)'],
+  ['Week-end / Court séjour', 267, 'var(--blue)'],
+  ['Séjour balnéaire / Plage', 193, 'var(--orange)'],
+  ['Spa / Bien-être', 186, 'var(--purple-lt)'],
+  ['Plongée / Sport nautique', 129, 'var(--purple)'],
+  ["Parc d'attractions", 86, 'var(--green)'],
+  ['Circuit / Tour organisé', 85, 'var(--purple)'],
+  ['Camping / Plein air', 66, 'var(--green)'],
+  ['Croisière', 53, 'var(--cyan)'],
+  ['Ski / Montagne / Neige', 32, 'var(--blue)'],
+  ['Safari / Aventure', 30, 'var(--orange)'],
+  ['Écotourisme / Nature', 24, 'var(--purple)'],
+];
+const typoMax = 456;
+const typosEl = document.getElementById('typos');
+typos.forEach(([name, val, color]) => {
+  const row = document.createElement('div');
+  row.className = 'typo-row';
+  row.innerHTML = `
+    <div class="typo-name">${name}</div>
+    <div class="typo-bar-wrap"><div class="typo-bar" style="background: ${color}; width: ${val/typoMax*100}%;"></div></div>
+    <div class="typo-val">${val}</div>
+  `;
+  typosEl.appendChild(row);
+});
+
+// ---------- Season chart ----------
+const months = [
+  [8, 'winter'],
+  [69, 'winter'],
+  [65, 'winter'],
+  [267, 'spring'],
+  [145, 'spring'],
+  [376, 'summer'],
+  [405, 'summer'],
+  [372, 'summer'],
+  [247, 'autumn'],
+  [193, 'autumn'],
+  [27, 'autumn'],
+  [36, 'winter'],
+];
+const seasonMax = 405;
+const seasonChart = document.getElementById('seasonChart');
+months.forEach(([val, cls]) => {
+  const bar = document.createElement('div');
+  bar.className = 'season-bar ' + cls;
+  bar.style.height = (val / seasonMax * 100) + '%';
+  bar.title = val + ' convs';
+  seasonChart.appendChild(bar);
+});
+</script>
+
+</body>
+</html>
